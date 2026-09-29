@@ -55,7 +55,12 @@ function Guard(props: ParentProps) {
     location.pathname;
     window.requestAnimationFrame(() => {
       const heading = document.querySelector<HTMLElement>("main h1");
-      if (heading && !document.querySelector("[role='dialog'], [role='alertdialog']")) {
+      const active = document.activeElement;
+      if (
+        heading &&
+        !active?.matches("button, a, input, select, textarea, summary") &&
+        !document.querySelector("[role='dialog'], [role='alertdialog']")
+      ) {
         heading.tabIndex = -1;
         heading.focus();
       }

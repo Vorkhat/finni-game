@@ -1,6 +1,6 @@
 import { usePetText } from "../application/game-context";
 import { profileGoals, programTasks, situations } from "@finni/content";
-import { createSignal, For, onCleanup, Show } from "solid-js";
+import { createSignal, For, onCleanup, onMount, Show } from "solid-js";
 import { A, useNavigate } from "@solidjs/router";
 import { learningStatus, type LearningTopic } from "@finni/shared";
 import { goals, interfaceContent, periodContent } from "@finni/content";
@@ -20,6 +20,7 @@ export function AdultGate() {
   const petText = usePetText();
   const game = useGame();
   const navigate = useNavigate();
+  onMount(game.lockAdult);
   const [progress, setProgress] = createSignal(0);
   let startedAt = 0;
   let timer: ReturnType<typeof setInterval> | undefined;
@@ -37,7 +38,7 @@ export function AdultGate() {
     navigate("/adult/dashboard", { replace: true });
   };
   const start = () => {
-    if (timer || game.adultUnlocked()) return;
+    if (timer) return;
     startedAt = performance.now();
     timer = setInterval(() => {
       const next = Math.min(
@@ -71,7 +72,7 @@ export function AdultGate() {
           onPointerCancel={cancel}
           onLostPointerCapture={cancel}
           onKeyDown={(event) => {
-            if ((event.key === " " || event.key === "Enter") && !event.repeat) {
+            if (event.key === " " || event.key === "Enter") {
               event.preventDefault();
               start();
             }

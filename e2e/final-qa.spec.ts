@@ -565,6 +565,9 @@ test("Adult gate can be reopened after leaving", async ({ page }) => {
   await expect(page).toHaveURL(/adult\/dashboard/);
   await page.getByRole("link", { name: "Назад", exact: true }).click();
   await page.getByRole("link", { name: "Для взрослых", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "Для взрослых" }),
+  ).toBeFocused();
   await page.getByRole("button", { name: "Удерживайте 3 секунды" }).focus();
   await page.keyboard.down("Space");
   await expect.poll(async () => Number(await page.locator(".hold-progress").getAttribute("value"))).toBeGreaterThan(0);

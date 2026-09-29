@@ -16,6 +16,7 @@ import {
 } from "./application/game-context";
 import { Art, Button } from "./components/ui";
 import { applyPreferences } from "./application/preferences";
+import { focusIsInsideDialog } from "./application/heading-focus";
 import { DemoBadge } from "./components/demo";
 import { installNativeShell } from "./application/native-shell";
 
@@ -55,12 +56,7 @@ function Guard(props: ParentProps) {
     location.pathname;
     window.requestAnimationFrame(() => {
       const heading = document.querySelector<HTMLElement>("main h1");
-      const active = document.activeElement;
-      if (
-        heading &&
-        !active?.matches("button, a, input, select, textarea, summary") &&
-        !document.querySelector("[role='dialog'], [role='alertdialog']")
-      ) {
+      if (heading && !focusIsInsideDialog(document.activeElement)) {
         heading.tabIndex = -1;
         heading.focus();
       }

@@ -1,7 +1,7 @@
 # Документация проекта «Финни»
 
 Консолидированная документация игры по финансовой грамотности для детей 7–11 лет.
-Собрана из материалов каталога `project/docs` и корневого `README.md`.
+Собрана из материалов каталога `docs` и корневого `README.md`.
 
 ## Содержание
 
@@ -37,9 +37,9 @@
 бюджета дня, покупки и копилку, учебные задания и жизненные ситуации, результат дня,
 развитие питомца, раздел для взрослых и демонстрационный режим.
 
-> Исторические отчёты в `project/docs` (stage1–stage6, `FINAL_QA_REPORT.md`) описывают
+> Исторические отчёты в `docs` (stage1–stage6, `FINAL_QA_REPORT.md`) описывают
 > более ранний цикл из 6 заданий / 30 ситуаций и 5 периодов. Текущее расписание —
-> 10 дней / 20 заданий / 60 ситуаций (см. `project/docs/PROGRAM_CONTENT.md`).
+> 10 дней / 20 заданий / 60 ситуаций (см. `docs/PROGRAM_CONTENT.md`).
 
 ## Архитектура
 
@@ -128,22 +128,21 @@ Finni-2026-09-25/
 ├── README.md                  # краткая инструкция по передаче и запуску
 ├── DOCUMENTATION.md           # этот файл
 ├── START_GAME_WINDOWS.cmd     # запуск готовой игры на Windows без Node.js
-└── project/
-    ├── apps/
-    │   ├── web/               # SolidJS-приложение: src, public, собранный dist
-    │   └── api/               # заготовка NestJS API (Dockerfile + main.ts), не в gameplay
-    ├── packages/
-    │   ├── shared/            # домен, Zod-схемы, экономика, периоды, развитие питомца
-    │   ├── content/           # JSON/TS-контент: задания, ситуации, цели, товары, экономика
-    │   └── config/            # общие конфиги
-    ├── android/               # Capacitor Android-проект
-    ├── e2e/                   # Playwright-сценарии
-    ├── scripts/               # сборка, portable-сервер, ассеты, Android
-    ├── docs/                  # документация, отчёты этапов, QA-материалы
-    ├── capacitor.config.ts
-    ├── docker-compose.yml     # опциональный локальный API-стаб
-    ├── pnpm-workspace.yaml
-    └── package.json
+├── apps/
+│   ├── web/                   # SolidJS-приложение: src, public, собранный dist
+│   └── api/                   # заготовка NestJS API (Dockerfile + main.ts), не в gameplay
+├── packages/
+│   ├── shared/                # домен, Zod-схемы, экономика, периоды, развитие питомца
+│   ├── content/               # JSON/TS-контент: задания, ситуации, цели, товары, экономика
+│   └── config/                # общие конфиги
+├── android/                   # Capacitor Android-проект
+├── e2e/                       # Playwright-сценарии
+├── scripts/                   # сборка, portable-сервер, ассеты, Android
+├── docs/                      # документация, отчёты этапов, QA-материалы
+├── capacitor.config.ts
+├── docker-compose.yml         # опциональный локальный API-стаб
+├── pnpm-workspace.yaml
+└── package.json
 ```
 
 ### Запуск готовой игры (Windows, без Node.js)
@@ -158,7 +157,7 @@ Finni-2026-09-25/
 
 ### Запуск для разработки
 
-Проверено с Node.js 24 и pnpm 11.19.0. Из каталога `project`:
+Проверено с Node.js 24 и pnpm 11.19.0. Из корня репозитория:
 
 ```sh
 npm install -g pnpm@11.19.0
@@ -173,13 +172,13 @@ pnpm preview   # frontend preview на http://127.0.0.1:4173
 
 Сборка Android: `pnpm android:build` (пересобирает веб-версию, выполняет `cap sync
 android` и собирает debug APK в `artifacts/android/Finni-1.0.0-debug.apk`).
-Требуются JDK 21 и Android SDK; подробности — `project/docs/android-signing.md`.
+Требуются JDK 21 и Android SDK; подробности — `docs/android-signing.md`.
 
 ## Развёртывание
 
 **Веб-версия** разворачивается как статический сайт:
 
-1. `pnpm build` формирует `project/apps/web/dist`.
+1. `pnpm build` формирует `apps/web/dist`.
 2. Содержимое `dist` копируется в корень сайта.
 3. Настраивается SPA fallback: маршруты вида `/home`, `/tasks` должны возвращать
    `index.html`, а существующие `/assets/` — отдаваться как файлы.
@@ -195,8 +194,8 @@ android` и собирает debug APK в `artifacts/android/Finni-1.0.0-debug.a
 - debug APK собирается командой `pnpm android:build`;
 - release APK/AAB — `pnpm android:release` (артефакты формируются unsigned);
 - подпись release выполняется только постоянным ключом владельца; в репозитории
-  ключей и учётных данных нет (см. `project/docs/requirements-matrix.md` и
-  `project/docs/release-checklist.md`);
+  ключей и учётных данных нет (см. `docs/requirements-matrix.md` и
+  `docs/release-checklist.md`);
 - публикация в RuStore и physical-device acceptance остаются за владельцем.
 
 Секреты, пароли, токены и серверные учётные данные в этот документ намеренно
@@ -349,7 +348,7 @@ deposit не превышает wallet; withdrawal не превышает savin
 
 Статусы: **DONE** — реализован заявленный объём, **PARTIAL** — только часть
 пользовательского требования, **NOT STARTED** — не начато, **N/A** — сознательно вне
-MVP. Подробные evidence — `project/docs/requirements-traceability.md`.
+MVP. Подробные evidence — `docs/requirements-traceability.md`.
 
 | Требование | Статус | Реализация |
 |---|---|---|

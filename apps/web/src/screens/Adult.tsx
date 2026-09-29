@@ -5,6 +5,7 @@ import { A, useNavigate } from "@solidjs/router";
 import { learningStatus, type LearningTopic } from "@finni/shared";
 import { goals, interfaceContent, periodContent } from "@finni/content";
 import { useGame } from "../application/game-context";
+import { enterAdultGate, startsAdultHold } from "../application/adult-gate";
 import {
   Art,
   Button,
@@ -20,7 +21,7 @@ export function AdultGate() {
   const petText = usePetText();
   const game = useGame();
   const navigate = useNavigate();
-  onMount(game.lockAdult);
+  onMount(() => enterAdultGate(game));
   const [progress, setProgress] = createSignal(0);
   let startedAt = 0;
   let timer: ReturnType<typeof setInterval> | undefined;
@@ -72,7 +73,7 @@ export function AdultGate() {
           onPointerCancel={cancel}
           onLostPointerCapture={cancel}
           onKeyDown={(event) => {
-            if (event.key === " " || event.key === "Enter") {
+            if (startsAdultHold(event)) {
               event.preventDefault();
               start();
             }

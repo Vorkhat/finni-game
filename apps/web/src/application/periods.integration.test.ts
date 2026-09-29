@@ -291,7 +291,7 @@ describe("five offline periods through GameService", () => {
     expect(migrated.pet).toEqual(raw.pet);
     expect(() => closePeriod(migrated, now)).toThrow("NO_ACTIVE_PERIOD");
     expect(() => migrateProfile({ ...raw, schemaVersion: 999 })).toThrow(
-      "INVALID_PROFILE",
+      "UNSUPPORTED_PROFILE_VERSION",
     );
     expect(
       createInitialProfile({

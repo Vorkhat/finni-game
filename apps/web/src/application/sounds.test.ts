@@ -1,6 +1,6 @@
 import { beforeEach, afterEach, expect, it, vi } from "vitest";
 const enabled = vi.hoisted(() => ({sound:true}));
-vi.mock("./preferences", () => ({readPreferences: () => enabled}));
+vi.mock("./preferences-storage", () => ({readPreferences: () => enabled}));
 import {playGameSound, stopGameSounds} from "./sounds";
 const all: FakeAudio[] = [];
 class FakeAudio {

@@ -102,16 +102,19 @@ export class LocalStorageAdapter implements StorageAdapter {
     await withProfileLock(this.key, this.storage, () => this.writeProfile(profile));
   }
 
-  private writeProfile(profile: GameProfile): void {
-    this.storage.setItem(this.key, JSON.stringify(GameProfileSchema.parse(profile)));
+  private writeProfile(profile: GameProfile): GameProfile {
+    const stored = GameProfileSchema.parse(profile);
+    this.storage.setItem(this.key, JSON.stringify(stored));
+    return stored;
   }
 
   async updateProfile(expected: string | null, operation: () => GameProfile): Promise<GameProfile> {
     return withProfileLock(this.key, this.storage, () => {
       assertCurrentProfile(this.readProfile(), expected);
-      const profile = operation();
-      this.writeProfile(profile);
-      return profile;
+      // Fingerprints must describe the canonical persisted shape, not the raw
+      // operation result: parse reorders keys, so returning the raw object would
+      // desync savedFingerprint from storage and cause spurious PROFILE_CONFLICT.
+      return this.writeProfile(operation());
     });
   }
 
@@ -144,9 +147,12 @@ export class MemoryStorageAdapter implements StorageAdapter {
   }
   async updateProfile(expected: string | null, operation: () => GameProfile): Promise<GameProfile> {
     assertCurrentProfile(await this.loadProfile(), expected);
-    const profile = operation();
-    await this.saveProfile(profile);
-    return profile;
+    // Return the canonical persisted shape so GameService fingerprints what was
+    // actually stored (see LocalStorageAdapter.updateProfile). Route through
+    // saveProfile so subclasses that simulate persistence failures still apply.
+    const stored = GameProfileSchema.parse(operation());
+    await this.saveProfile(stored);
+    return stored;
   }
   async deleteProfile(expected?: string | null): Promise<void> {
     assertCurrentProfile(await this.loadProfile(), expected);

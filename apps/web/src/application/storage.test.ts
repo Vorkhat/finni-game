@@ -53,6 +53,19 @@ describe("profile namespaces", () => {
       demoMode: false,
       walletBalance: 73,
       savingsBalance: 27,
+      // migrateProfile requires balances to be backed by credited income.
+      transactions: [
+        {
+          id: "fixture:topup",
+          type: "PERIOD_INCOME" as const,
+          amount: 100,
+          source: "fixture:topup",
+          category: "INCOME" as const,
+          periodId: "fixture",
+          createdAt: "2026-01-01T00:00:00.000Z",
+          metadata: {},
+        },
+      ],
     };
     await normal.saveProfile(normalProfile);
     await demo.saveProfile(createDemoProfile());

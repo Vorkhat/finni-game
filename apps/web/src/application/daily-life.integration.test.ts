@@ -177,9 +177,25 @@ describe("new dream settlement", () => {
     "spends the completed goal, returns excess and starts at zero (%s coins)",
     async (balance) => {
       const { game, storage } = await setup();
+      const seeded = game.getState()!;
       await storage.saveProfile({
-        ...game.getState()!,
+        ...seeded,
         savingsBalance: balance,
+        // migrateProfile enforces that balances never exceed credited income,
+        // so back the seeded savings with a real income transaction.
+        transactions: [
+          ...seeded.transactions,
+          {
+            id: `fixture:topup:${balance}`,
+            type: "PERIOD_INCOME",
+            amount: balance,
+            source: "fixture:topup",
+            category: "INCOME",
+            periodId: seeded.currentPeriod!.id,
+            createdAt: at(0),
+            metadata: {},
+          },
+        ],
       });
       await game.loadGame();
       await game.seeGoal("scooter", at(1));

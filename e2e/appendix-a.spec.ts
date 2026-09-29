@@ -66,6 +66,9 @@ async function allocate(page: Page, values: readonly number[]) {
 }
 
 async function unlockAdult(page: Page) {
+  await expect(
+    page.getByRole("heading", { name: "Для взрослых" }),
+  ).toBeFocused();
   await page
     .getByRole("button", { name: "Удерживайте 3 секунды" })
     .press("Space", { delay: 3200 });
@@ -96,11 +99,22 @@ test("Demo Mode preserves, resets and restores the exact normal profile", async 
 }, info) => {
   const normal = normalProfile();
   await page.addInitScript(
-    (profile) =>
-      localStorage.setItem("finni.game-profile", JSON.stringify(profile)),
+    (profile) => {
+      if (!localStorage.getItem("finni.game-profile"))
+        localStorage.setItem("finni.game-profile", JSON.stringify(profile));
+    },
     normal,
   );
   await page.goto("/settings");
+  await expect
+    .poll(async () =>
+      JSON.parse(
+        (await page.evaluate(() =>
+          localStorage.getItem("finni.game-profile"),
+        ))!,
+      ).needsUpdatedAt,
+    )
+    .not.toBe(now);
   const before = await page.evaluate(() =>
     localStorage.getItem("finni.game-profile"),
   );
@@ -123,6 +137,7 @@ test("Demo Mode preserves, resets and restores the exact normal profile", async 
     .getByRole("dialog")
     .getByRole("button", { name: "Начать заново" })
     .click();
+  await expect(page).toHaveURL(/goal\/select/);
   const resetDemo = await page.evaluate(() =>
     JSON.parse(localStorage.getItem("finni.demo-profile")!),
   );
@@ -130,7 +145,7 @@ test("Demo Mode preserves, resets and restores the exact normal profile", async 
     id: "demo-profile",
     walletBalance: 0,
     savingsBalance: 0,
-    selectedGoalId: "scooter",
+    selectedGoalId: null,
     demoMode: true,
   });
   await page.goto("/settings");
@@ -226,6 +241,9 @@ test("corrupt save recovery and direct-route guards are safe", async ({
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Скачать копию сохранения" }).click();
   await download;
+  await expect(
+    page.getByRole("button", { name: "Начать новую игру" }),
+  ).toBeVisible();
   await page.getByRole("button", { name: "Начать новую игру" }).click();
   await page
     .getByRole("alertdialog")
@@ -282,6 +300,7 @@ test("Appendix A: create a pet, begin day one, complete a lesson, and open Adult
   await page.goto("/tasks/T01");
   await page.getByRole("button", { name: "Обед · 20", exact: true }).click();
   await page.getByRole("button", { name: "Забрать награду · +10 монет", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Задание выполнено!" })).toBeVisible();
   await page.reload();
   await expect(page.getByText("Награда уже получена.", { exact: true })).toBeVisible();
   const profile = await page.evaluate(() => JSON.parse(localStorage.getItem("finni.game-profile")!));

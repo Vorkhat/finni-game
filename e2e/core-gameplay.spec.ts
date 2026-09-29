@@ -65,7 +65,7 @@ async function seed(page: Page, active = false) {
     if (location.origin !== "http://127.0.0.1:4173") return;
     if (!localStorage.getItem("finni.game-profile"))
       localStorage.setItem("finni.game-profile", JSON.stringify(profile));
-  }, profile);
+  }, { ...profile, needsUpdatedAt: new Date().toISOString() });
 }
 async function state(page: Page): Promise<GameProfile> {
   return page.evaluate(() =>
@@ -147,13 +147,19 @@ test("active day: income → budget → purchases → shortage → interactive r
   await seed(page);
   await page.goto("/home");
   await page.getByRole("button", { name: /План на день 1/ }).click();
+  const sheet = page.getByRole("dialog");
+  await expect(sheet.getByRole("link", { name: "Начать день" })).toBeVisible();
+  await sheet.getByRole("link", { name: "Начать день" }).click();
+  await expect(page).toHaveURL(/budget/);
   await expect(
     page.getByRole("heading", { name: "Новый день!" }),
   ).toBeVisible();
   await page
     .getByRole("button", { name: "Составить план", exact: true })
     .click();
-  expect((await state(page)).walletBalance).toBe(100);
+  await expect
+    .poll(async () => (await state(page)).walletBalance)
+    .toBe(100);
   await allocate(page);
   await page.getByRole("button", { name: "Хочу: увеличить" }).click();
   await expect(page.getByRole("alert")).toContainText(

@@ -19,6 +19,13 @@ export function Onboarding() {
     const profile = game.profile();
     navigate(profile ? bootDestination(profile) : "/pet/create");
   };
+  const finishLabel = () => {
+    const profile = game.profile();
+    if (!profile) return "Выбрать Финни";
+    return profile.selectedGoalId
+      ? petText("Вернуться к Финни")
+      : petText("Выбрать мечту");
+  };
   const launchDemo = async () => {
     setConfirmDemo(false);
     const profile = await game.startDemo();
@@ -66,12 +73,7 @@ export function Onboarding() {
                 </For>
               </div>
               <Button onClick={finish}>
-                {game.profile()
-                  ? game.profile()?.selectedGoalId
-                    ? petText("Вернуться к Финни")
-                    : "Выбрать мечту"
-                  : "Выбрать Финни"}{" "}
-                <span aria-hidden="true">→</span>
+                {finishLabel()} <span aria-hidden="true">→</span>
               </Button>
             </>
           }

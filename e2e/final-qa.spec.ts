@@ -426,7 +426,7 @@ test("day five keeps its second task visible after the first", async ({
   p.currentPeriod!.taskResults = [
     {
       taskId: first!.id,
-      topic: "PAYMENTS_AND_PURCHASES",
+      topic: "BUDGET_PLANNING",
       successful: true,
       reward: 10,
       completedAt: now,
@@ -529,18 +529,19 @@ test("missing pet images fall back within identity and then to readable placehol
   await expect(page.getByRole("navigation")).toBeVisible();
   expect((await state(page)).walletBalance).toBe(80);
 });
-test("situation learning survives reload without premature evolution", async ({
+test("situation learning evolves only from day four and acknowledges that evolution once", async ({
   page,
 }) => {
-  const p = initial();
-  p.pet.progress = {
+  // Below the threshold (completedPeriods < 4) a finished situation must not grow the pet.
+  const young = initial();
+  young.pet.progress = {
     mandatoryCare: 745,
     planDiscipline: 0,
     savings: 0,
     learning: 0,
     completedPeriods: 3,
   };
-  await seed(page, p);
+  await seed(page, young);
   await page.goto("/situations/S01");
   await page
     .getByRole("button", {
@@ -554,6 +555,43 @@ test("situation learning survives reload without premature evolution", async ({
   expect((await state(page)).pendingEvolution).toBeNull();
   await page.goto("/day/evolution");
   await expect(page).toHaveURL(/home/);
+
+  // At the threshold (completedPeriods >= 4) the same action earns EXPLORER and must be acknowledged.
+  const grown = initial();
+  grown.pet.progress = {
+    mandatoryCare: 745,
+    planDiscipline: 0,
+    savings: 0,
+    learning: 0,
+    completedPeriods: 4,
+  };
+  await seed(page, grown);
+  await page.goto("/situations/S01");
+  await page
+    .getByRole("button", {
+      name: situations[0]!.options[situations[0]!.correct]!,
+      exact: true,
+    })
+    .click();
+  await expect.poll(async () => (await state(page)).completedSituationIds).toContain("S01");
+  expect((await state(page)).pet.stage).toBe("EXPLORER");
+  expect((await state(page)).pendingEvolution).toEqual({
+    from: "BABY",
+    to: "EXPLORER",
+  });
+  await reload(page);
+  await page.goto("/home");
+  await page.getByRole("button", { name: "Посмотреть", exact: true }).click();
+  await expect(page.locator(".evolution-new")).toHaveAttribute(
+    "src",
+    /explorer-happy/,
+  );
+  await page.getByRole("button", { name: "Продолжить вместе" }).click();
+  await expect
+    .poll(async () => (await state(page)).pendingEvolution)
+    .toBeNull();
+  await reload(page);
+  expect((await state(page)).pendingEvolution).toBeNull();
 });
 
 test("Adult gate can be reopened after leaving", async ({ page }) => {
@@ -568,11 +606,17 @@ test("Adult gate can be reopened after leaving", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "Для взрослых" }),
   ).toBeFocused();
-  await page.getByRole("button", { name: "Удерживайте 3 секунды" }).focus();
+  const gate = page.getByRole("button", { name: "Удерживайте 3 секунды" });
+  const holdPercent = async () =>
+    Number(await page.locator(".hold-progress").getAttribute("value"));
+  await gate.focus();
   await page.keyboard.down("Space");
-  await expect.poll(async () => Number(await page.locator(".hold-progress").getAttribute("value"))).toBeGreaterThan(0);
-  await expect(page).toHaveURL(/adult\/dashboard/);
+  await expect.poll(holdPercent).toBeGreaterThan(0);
   await page.keyboard.up("Space");
+  await expect(page).toHaveURL(/\/adult$/);
+  await expect.poll(holdPercent).toBe(0);
+  await gate.press("Space", { delay: 3200 });
+  await expect(page).toHaveURL(/adult\/dashboard/);
 });
 
 test("all nine appearance choices survive creation, reload and navigation", async ({

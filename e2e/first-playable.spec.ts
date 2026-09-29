@@ -183,7 +183,14 @@ test("dragon, invalid names, interrupted goal selection and predictable Back", a
   }
   await page.getByLabel("Как назовём питомца?").fill("  Финни  ");
   await page.getByRole("button", { name: "Готово" }).click();
+  await expect(page).toHaveURL(/goal\/select/);
   await page.reload();
+  await expect(page).toHaveURL(/goal\/select/);
+  await page.getByRole("link", { name: "Назад", exact: true }).click();
+  await expect(page).toHaveURL(/home/);
+  await expect(page.getByRole("link", { name: "Выбрать мечту" })).toBeVisible();
+  await page.goto("/onboarding?step=concepts");
+  await page.getByRole("button", { name: "Выбрать мечту" }).click();
   await expect(page).toHaveURL(/goal\/select/);
   await page.getByRole("button", { name: /Космическое путешествие/ }).click();
   await page.getByRole("button", { name: "К нашей мечте" }).click();
@@ -191,7 +198,7 @@ test("dragon, invalid names, interrupted goal selection and predictable Back", a
     "src",
     /pet-dragon-turquoise-baby-idle/,
   );
-  await expect(page.getByTestId("goal-balance")).toHaveText("0 / 700");
+  await expect(page.getByTestId("goal-balance")).toHaveText("0 / 500");
   await checkLayout(page);
   const goalTitleLayout = await page
     .locator(".home-goal-chip")

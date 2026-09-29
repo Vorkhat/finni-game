@@ -72,9 +72,7 @@ export function GoalSelect() {
   };
   return (
     <main class="setup-page">
-      <ScreenHeader
-        back={game.profile()?.selectedGoalId ? "/home" : "/onboarding"}
-      />
+      <ScreenHeader back="/home" />
       <div class="setup-content goal-select">
         <span class="eyebrow">Большая мечта, маленькие шаги</span>
         <h1>

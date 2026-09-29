@@ -51,6 +51,10 @@ describe("Android Back shell", () => {
     expect(back).toHaveBeenCalledOnce();
     callback({ canGoBack: false });
     expect(home).toHaveBeenCalledOnce();
+    path = "/goal/select";
+    callback({ canGoBack: true });
+    expect(home).toHaveBeenCalledTimes(2);
+    expect(back).toHaveBeenCalledOnce();
     path = "/home";
     callback({ canGoBack: true });
     expect(native.exit).toHaveBeenCalledOnce();

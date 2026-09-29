@@ -38,6 +38,11 @@ export function installNativeShell(options: NativeShellOptions): () => void {
       return;
     }
 
+    if (path === "/goal/select") {
+      options.goHome();
+      return;
+    }
+
     if (canGoBack) window.history.back();
     else options.goHome();
   })

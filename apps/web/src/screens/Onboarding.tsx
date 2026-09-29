@@ -5,6 +5,7 @@ import { interfaceContent } from "@finni/content";
 import { useGame } from "../application/game-context";
 import { PetImage } from "../components/game";
 import { Art, Button, ConfirmDialog, ScreenHeader } from "../components/ui";
+import { bootDestination } from "../application/boot-route";
 
 export function Onboarding() {
  const petText = usePetText();
@@ -14,7 +15,10 @@ export function Onboarding() {
   const [confirmDemo, setConfirmDemo] = createSignal(false);
   const step = () =>
     new URLSearchParams(location.search).get("step") === "concepts" ? 1 : 0;
-  const finish = () => navigate(game.profile() ? "/home" : "/pet/create");
+  const finish = () => {
+    const profile = game.profile();
+    navigate(profile ? bootDestination(profile) : "/pet/create");
+  };
   const launchDemo = async () => {
     setConfirmDemo(false);
     const profile = await game.startDemo();
@@ -62,7 +66,11 @@ export function Onboarding() {
                 </For>
               </div>
               <Button onClick={finish}>
-                {game.profile() ? petText("Вернуться к Финни") : "Выбрать Финни"}{" "}
+                {game.profile()
+                  ? game.profile()?.selectedGoalId
+                    ? petText("Вернуться к Финни")
+                    : "Выбрать мечту"
+                  : "Выбрать Финни"}{" "}
                 <span aria-hidden="true">→</span>
               </Button>
             </>

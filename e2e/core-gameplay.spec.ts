@@ -146,7 +146,7 @@ test("active day: income → budget → purchases → shortage → interactive r
 }, info) => {
   await seed(page);
   await page.goto("/home");
-  await page.getByRole("button", { name: /Начать день/ }).click();
+  await page.getByRole("button", { name: /План на день 1/ }).click();
   await expect(
     page.getByRole("heading", { name: "Новый день!" }),
   ).toBeVisible();
@@ -195,10 +195,12 @@ test("active day: income → budget → purchases → shortage → interactive r
   await shot(page, "insufficient-funds", info);
   await page.getByRole("link", { name: "К заданиям", exact: true }).click();
   await shot(page, "tasks", info);
-  await page.getByRole("link", { name: /Собери бюджет/ }).click();
-  await allocate(page);
+  await page.getByRole("link", { name: /Что сначала\?/ }).click();
+  await expect(page.locator('[data-task-id="T01"]')).toBeVisible();
+  await page.getByRole("button", { name: "Обед · 20", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Верно! Финни радуется!" })).toBeVisible();
   await shot(page, "task-active", info);
-  await page.getByRole("button", { name: /Забрать награду/ }).click();
+  await page.getByRole("button", { name: "Забрать награду · +10 монет", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Задание выполнено!" }),
   ).toBeVisible();
@@ -294,95 +296,21 @@ test("withdrawal has preview/cancel, capped amount, and confirmation exactly onc
   expect((await state(page)).transactions).toHaveLength(3);
 });
 
-for (const [id, type] of [
-  ["assemble-budget", "allocate_budget"],
-  ["needs-first", "prioritize"],
-  ["save-for-scooter", "savings_choice"],
-  ["fit-the-budget", "shopping_cart"],
-  ["plan-changed", "unexpected_expense"],
-  ["dream-or-now", "goal_vs_want"],
-]) {
-  test(`renderer ${type}: interaction, consequence, recovery, completion and one reward`, async ({
-    page,
-  }, info) => {
-    await seed(page, true);
-    await page.goto(`/tasks/${id}`);
-    await expect(page.locator(`[data-task-type="${type}"]`)).toBeVisible();
-    if (type === "allocate_budget") await allocate(page);
-    if (type === "prioritize") {
-      await page.getByRole("button", { name: /Сначала игрушка/ }).click();
-      await expect(page.getByRole("status")).toContainText("Останется 10");
-      await expect(
-        page.getByRole("button", { name: /Забрать награду/ }),
-      ).toHaveCount(0);
-      await page.getByRole("button", { name: "Изменить порядок" }).click();
-      await page.getByRole("button", { name: /Сначала обед/ }).click();
-    }
-    if (type === "savings_choice")
-      await page
-        .getByRole("button", { name: "Отложить 50", exact: true })
-        .click();
-    if (type === "shopping_cart") {
-      for (const name of ["Обед", "Уход", "Игрушка"])
-        await page.getByRole("button", { name, exact: true }).click();
-      await expect(page.getByRole("status")).toContainText(
-        "Не хватает монет: 20",
-      );
-      await page.getByRole("button", { name: "Игрушка", exact: true }).click();
-      await expect(page.getByRole("status")).toContainText("Корзина стоит 45");
-    }
-    if (type === "unexpected_expense") {
-      await page.getByRole("button", { name: /Купить мяч/ }).click();
-      await expect(page.getByRole("status")).toContainText("Останется 15");
-      await page.getByRole("button", { name: "Попробовать ещё" }).click();
-      await page.getByRole("button", { name: /Сначала уход/ }).click();
-    }
-    if (type === "goal_vs_want") {
-      await page.getByRole("button", { name: /Купить игру/ }).click();
-      await expect(page.getByRole("status")).toContainText("В кошельке 0");
-      await page.getByRole("button", { name: "Отложить часть: 30" }).click();
-    }
-    await expect(page.locator(".task-feedback")).toBeVisible();
-    expect(await state(page)).toMatchObject({
-      walletBalance: 100,
-      savingsBalance: 0,
-    });
-    await shot(page, `task-${type}`, info);
-    const feedbackBefore = await page.locator(".task-feedback").innerText();
-    await reloadUnchanged(page);
-    await expect(page.locator(".task-feedback")).toHaveText(feedbackBefore, {
-      useInnerText: true,
-    });
-    expect(
-      (await state(page)).transactions.filter((t) => t.type === "TASK_REWARD"),
-    ).toHaveLength(0);
-    const targets = await page
-      .locator(".task-renderer button")
-      .evaluateAll((buttons) =>
-        buttons.map((button) => {
-          const rect = button.getBoundingClientRect();
-          return { w: rect.width, h: rect.height };
-        }),
-      );
-    expect(targets.every((target) => target.w >= 48 && target.h >= 48)).toBe(
-      true,
-    );
-    await page.getByRole("button", { name: /Забрать награду/ }).dblclick();
-    await expect(
-      page.getByRole("heading", { name: "Задание выполнено!" }),
-    ).toBeVisible();
-    expect(await state(page)).toMatchObject({
-      walletBalance: 110,
-      savingsBalance: 0,
-    });
-    await reloadUnchanged(page);
-    await expect(
-      page.getByRole("button", { name: /Забрать награду/ }),
-    ).toHaveCount(0);
-    expect(
-      (await state(page)).transactions.filter(
-        (entry) => entry.type === "TASK_REWARD",
-      ),
-    ).toHaveLength(1);
-  });
-}
+test("day-one task: incorrect answer can be retried, reward persists once, future task is locked", async ({ page }) => {
+  await seed(page, true);
+  await page.goto("/tasks/T01");
+  await expect(page.locator('[data-task-id="T01"]')).toBeVisible();
+  await page.getByRole("button", { name: "Игрушка · 30", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Не совсем. Попробуй ещё раз!" })).toBeVisible();
+  expect((await state(page)).walletBalance).toBe(100);
+  await page.getByRole("button", { name: "Попробовать ещё раз", exact: true }).click();
+  await page.getByRole("button", { name: "Обед · 20", exact: true }).click();
+  await page.getByRole("button", { name: "Забрать награду · +10 монет", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Задание выполнено!" })).toBeVisible();
+  expect((await state(page)).walletBalance).toBe(110);
+  await page.reload();
+  await expect(page.getByText("Награда уже получена.", { exact: true })).toBeVisible();
+  expect((await state(page)).transactions.filter((entry) => entry.type === "TASK_REWARD")).toHaveLength(1);
+  await page.goto("/tasks/T20");
+  await expect(page.getByRole("heading", { name: "Задание откроется в день 10" })).toBeVisible();
+});

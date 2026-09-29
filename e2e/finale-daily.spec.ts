@@ -116,6 +116,7 @@ test("finale leads to a personal dream, new friend and saved album", async ({
   await page.getByRole("button", { name: /Готово/ }).click();
   await expect(page).toHaveURL(/\/goal\/select$/);
   await page.getByRole("button", { name: /К нашей мечте/ }).click();
+  await expect(page).toHaveURL(/\/home$/);
   await page.goto("/pet/album");
   await expect(
     page.getByRole("heading", { name: "Искорка", exact: true }),

@@ -6,6 +6,7 @@ import {
   updateBudgetPlan,
   confirmBudgetPlan,
   completeTask,
+  depositToSavings,
   selectSavingsGoal,
 } from "../packages/shared/src";
 import { programTasks, dailySituations } from "../packages/content";
@@ -116,7 +117,7 @@ test("needs show colored bars and words instead of visible numbers", async ({
     path: `docs/qa/daily-life/${info.project.name}-needs.png`,
   });
 });
-function profile(completed = true) {
+function profile(completed = true, income = 100) {
   let p = selectSavingsGoal(
     createInitialProfile({
       id: "daily-ui",
@@ -131,7 +132,7 @@ function profile(completed = true) {
   );
   p = startPeriod(p, {
     periodId: "day1",
-    income: 100,
+    income,
     transactionId: "income1",
     startedAt: now,
   });
@@ -230,10 +231,14 @@ test("thirty-minute day persists actions and unlocks after offline return", asyn
 test("selecting the next dream spends the old one and starts a fresh piggy bank", async ({
   page,
 }) => {
+  const funded = depositToSavings(profile(true, 350), 250, {
+    transactionId: "save-for-scooter",
+    createdAt: now,
+  });
   await page.clock.install({ time: new Date(now) });
   await page.addInitScript(
     (p) => localStorage.setItem("finni.game-profile", JSON.stringify(p)),
-    { ...profile(), savingsBalance: 250, achievedGoalIds: ["scooter"] },
+    funded,
   );
   await page.goto("/goal/select");
   await page.getByRole("button", { name: /Домик Финни/ }).click();
@@ -245,4 +250,5 @@ test("selecting the next dream spends the old one and starts a fresh piggy bank"
   expect(saved.selectedGoalId).toBe("pet_house");
   expect(saved.savingsBalance).toBe(0);
   expect(saved.walletBalance).toBe(170);
+  expect(saved.achievedGoalIds).toContain("scooter");
 });

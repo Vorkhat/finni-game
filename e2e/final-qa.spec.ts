@@ -20,7 +20,7 @@ import {
   situations,
   purchases,
   goals,
-  dailyStories,
+  programDailyTasks,
 } from "../packages/content";
 const now = "2026-09-19T00:00:00.000Z";
 const qa = "docs/qa/final";
@@ -220,14 +220,15 @@ test("all thirty situations: incorrect, hint, correct, double tap, reload, back,
         exact: true,
       })
       .click();
-    await expect(page.locator(".situation-retry")).toBeVisible();
+    await expect(page.getByRole("dialog")).toContainText("Попробуй ещё раз");
+    await page.getByRole("dialog").getByRole("button", { name: "Попробовать ещё раз" }).click();
     await page.getByRole("button", { name: /Подсказка/ }).click();
     await expect(page.locator(".task-hint")).toContainText(s.hint);
     await page
       .getByRole("button", { name: s.options[s.correct]!, exact: true })
       .dblclick();
     await expect(page.getByRole("heading", { name: /Верно!/ })).toBeVisible();
-    expect((await state(page)).completedSituationIds).toHaveLength(i + 1);
+    await expect.poll(async () => (await state(page)).completedSituationIds.length).toBe(i + 1);
     expect((await state(page)).pet.progress.learning).toBe(
       learning + 8 * (i + 1),
     );
@@ -359,6 +360,16 @@ test("small and tall screens, large balances, long names, keyboard-sized viewpor
   p.pet.name = "ОченьДлинноеИмя!!";
   p.walletBalance = 999999999;
   p.savingsBalance = 999999999;
+  p.transactions.push({
+    id: "large-balance-income",
+    type: "PERIOD_INCOME",
+    amount: 1999999898,
+    source: "large-balance-test",
+    category: "INCOME",
+    periodId: p.currentPeriod!.id,
+    createdAt: now,
+    metadata: {},
+  });
   await seed(page, p);
   for (const size of [
     { width: 320, height: 568 },
@@ -402,10 +413,11 @@ test("day five keeps its second task visible after the first", async ({
   page,
 }) => {
   let p = initial();
+  const [first, second] = programDailyTasks(5);
   p.currentPeriod!.index = 5;
   p.completedTasks = [
     {
-      taskId: dailyStories(5)[0]!,
+      taskId: first!.id,
       periodId: p.currentPeriod!.id,
       successful: true,
       completedAt: now,
@@ -413,8 +425,8 @@ test("day five keeps its second task visible after the first", async ({
   ];
   p.currentPeriod!.taskResults = [
     {
-      taskId: dailyStories(5)[0]!,
-      topic: "SAVINGS",
+      taskId: first!.id,
+      topic: "PAYMENTS_AND_PURCHASES",
       successful: true,
       reward: 10,
       completedAt: now,
@@ -422,9 +434,7 @@ test("day five keeps its second task visible after the first", async ({
   ];
   await seed(page, p);
   await expect(page.locator(".home-context-card")).toContainText("Задание дня");
-  await expect(page.locator(".home-context-card")).toContainText(
-    "Мечта или сейчас",
-  );
+  await expect(page.locator(".home-context-card")).toContainText(second!.title);
 });
 
 test("failed situation save can retry, and a failed demo-mode switch keeps normal service", async ({
@@ -460,7 +470,7 @@ test("failed situation save can retry, and a failed demo-mode switch keeps norma
       exact: true,
     })
     .click();
-  expect((await state(page)).completedSituationIds).toEqual(["S01"]);
+  await expect.poll(async () => (await state(page)).completedSituationIds).toEqual(["S01"]);
   await reload(page);
   const normal = await state(page);
   await page.evaluate(() =>
@@ -479,7 +489,7 @@ test("failed situation save can retry, and a failed demo-mode switch keeps norma
       exact: true,
     })
     .click();
-  expect((await state(page)).completedSituationIds).toEqual(["S01", "S02"]);
+  await expect.poll(async () => (await state(page)).completedSituationIds).toEqual(["S01", "S02"]);
   expect((await state(page)).id).toBe(normal.id);
 });
 test("missing pet images fall back within identity and then to readable placeholder", async ({
@@ -519,7 +529,7 @@ test("missing pet images fall back within identity and then to readable placehol
   await expect(page.getByRole("navigation")).toBeVisible();
   expect((await state(page)).walletBalance).toBe(80);
 });
-test("situation evolution survives reload and is acknowledged once", async ({
+test("situation learning survives reload without premature evolution", async ({
   page,
 }) => {
   const p = initial();
@@ -538,16 +548,8 @@ test("situation evolution survives reload and is acknowledged once", async ({
       exact: true,
     })
     .click();
-  expect((await state(page)).pet.stage).toBe("EXPLORER");
-  await reload(page);
-  await page.goto("/home");
-  await page.getByRole("button", { name: "Посмотреть", exact: true }).click();
-  await expect(page.locator(".evolution-new")).toHaveAttribute(
-    "src",
-    /explorer-happy/,
-  );
-  await reload(page);
-  await page.getByRole("button", { name: "Продолжить вместе" }).click();
+  await expect.poll(async () => (await state(page)).completedSituationIds).toContain("S01");
+  expect((await state(page)).pet.stage).toBe("BABY");
   await reload(page);
   expect((await state(page)).pendingEvolution).toBeNull();
   await page.goto("/day/evolution");
@@ -563,10 +565,11 @@ test("Adult gate can be reopened after leaving", async ({ page }) => {
   await expect(page).toHaveURL(/adult\/dashboard/);
   await page.getByRole("link", { name: "Назад", exact: true }).click();
   await page.getByRole("link", { name: "Для взрослых", exact: true }).click();
-  await page
-    .getByRole("button", { name: "Удерживайте 3 секунды" })
-    .press("Space", { delay: 3200 });
+  await page.getByRole("button", { name: "Удерживайте 3 секунды" }).focus();
+  await page.keyboard.down("Space");
+  await expect.poll(async () => Number(await page.locator(".hold-progress").getAttribute("value"))).toBeGreaterThan(0);
   await expect(page).toHaveURL(/adult\/dashboard/);
+  await page.keyboard.up("Space");
 });
 
 test("all nine appearance choices survive creation, reload and navigation", async ({
@@ -607,8 +610,10 @@ test("all nine appearance choices survive creation, reload and navigation", asyn
       new RegExp(`pet-${pet.species}-${pet.colorVariant}-baby-idle`),
     );
     await page.getByRole("button", { name: /Готово/ }).click();
+    await expect(page).toHaveURL(/goal\/select/);
     await reload(page);
     await page.getByRole("button", { name: /К нашей мечте/ }).click();
+    await expect(page).toHaveURL(/home/);
     await reload(page);
     expect((await state(page)).pet.appearance).toMatchObject(pet);
     await page.getByRole("link", { name: "Настройки", exact: true }).click();

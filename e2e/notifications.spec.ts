@@ -8,11 +8,17 @@ async function seed(page:Page){
  await page.addInitScript(value=>{if(!localStorage.getItem("finni.game-profile"))localStorage.setItem("finni.game-profile",JSON.stringify(value));},p);
  await page.goto("/home");
 }
-test("latest notice replaces prior feedback; close goes straight to thanks without a cross",async({page})=>{
+test("latest transaction notice replaces prior feedback and dismissal persists",async({page})=>{
  await seed(page);
- await page.getByRole("button",{name:"Закрыть сообщение",exact:true}).click();
+ const dismiss=page.getByRole("button",{name:"Закрыть сообщение",exact:true});
+ for(let i=0;i<10 && await dismiss.count();i++) await dismiss.click();
+ await expect(dismiss).toHaveCount(0);
+ await page.goto('/shop?activity=feed');
+ await page.getByRole('button',{name:'Купить: Завтрак',exact:true}).click();
+ await page.getByRole('dialog').getByRole('button',{name:'Купить',exact:true}).click();
+ await page.goto('/home');
  await expect(page.locator(".home-context-card")).toContainText("Спасибо за заботу!");
- await expect(page.getByRole("button",{name:"Закрыть сообщение",exact:true})).toHaveCount(0);
+ await expect(dismiss).toHaveCount(0);
  await page.getByRole("navigation").getByRole("link",{name:"Копилка",exact:true}).click();
  await page.getByRole("button",{name:"Отложить монетки",exact:true}).click();
  await page.getByRole("button",{name:"+20",exact:true}).click();
@@ -28,11 +34,11 @@ test("latest notice replaces prior feedback; close goes straight to thanks witho
  await page.getByRole("link",{name:"К Финни",exact:true}).click();
  await expect(page.locator(".home-context-card")).toContainText("Задание выполнено");
  await expect(page.locator(".home-context-card")).not.toContainText("Ближе к мечте");
- await page.getByRole("button",{name:"Закрыть сообщение",exact:true}).click();
- await expect(page.locator(".home-context-card")).toContainText("Спасибо за заботу!");
+ await dismiss.click();
+ await expect(page.locator(".home-context-card")).toHaveCount(0);
  await expect(page.locator(".home-event-dismiss")).toHaveCount(0);
  await page.reload();
- await expect(page.locator(".home-context-card")).toContainText("Спасибо за заботу!");
+ await expect(page.locator(".home-context-card")).toHaveCount(0);
  await expect(page.locator(".home-event-dismiss")).toHaveCount(0);
 });
 test("reset is available in settings; cancelling preserves the save",async({page})=>{

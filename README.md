@@ -69,7 +69,7 @@ pnpm android:build
 ## Структура репозитория
 
 ```text
-Finni-2026-09-25/
+Finni/
 ├── apps/web/          # SolidJS-приложение: src, public, собранный dist
 ├── apps/api/          # заготовка NestJS API, в игровом runtime не используется
 ├── packages/shared/   # домен, Zod-схемы, экономика, развитие питомца

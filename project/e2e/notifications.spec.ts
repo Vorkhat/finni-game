@@ -1,0 +1,47 @@
+import {test,expect,type Page} from "@playwright/test";
+import {createInitialProfile,startPeriod,confirmBudgetPlan,updateBudgetPlan} from "../packages/shared/src";
+const now="2026-09-25T10:00:00.000Z";
+async function seed(page:Page){
+ let p=createInitialProfile({id:"notice-test",petId:"pet",petName:"Финни",playerNickname:"Гость",appearance:{species:"dog",colorVariant:"dalmatian"},now});p.selectedGoalId="scooter";
+ p=confirmBudgetPlan(updateBudgetPlan(startPeriod(p,{periodId:"day1",transactionId:"income1",income:100,startedAt:now}),{plannedMandatory:50,plannedOptional:30,plannedSavings:20},now),now);
+ await page.clock.install({time:new Date(now)});
+ await page.addInitScript(value=>{if(!localStorage.getItem("finni.game-profile"))localStorage.setItem("finni.game-profile",JSON.stringify(value));},p);
+ await page.goto("/home");
+}
+test("latest notice replaces prior feedback; close goes straight to thanks without a cross",async({page})=>{
+ await seed(page);
+ await page.getByRole("button",{name:"Закрыть сообщение",exact:true}).click();
+ await expect(page.locator(".home-context-card")).toContainText("Спасибо за заботу!");
+ await expect(page.getByRole("button",{name:"Закрыть сообщение",exact:true})).toHaveCount(0);
+ await page.getByRole("navigation").getByRole("link",{name:"Копилка",exact:true}).click();
+ await page.getByRole("button",{name:"Отложить монетки",exact:true}).click();
+ await page.getByRole("button",{name:"+20",exact:true}).click();
+ await page.getByRole("button",{name:"Продолжить",exact:true}).click();
+ await page.getByRole("button",{name:"Отложить",exact:true}).click();
+ await page.getByRole("button",{name:"Готово",exact:true}).click();
+ await page.getByRole("navigation").getByRole("link",{name:"Дом",exact:true}).click();
+ await expect(page.locator(".home-context-card")).toContainText("Ближе к мечте!");
+ await page.getByRole("navigation").getByRole("link",{name:"Задания",exact:true}).click();
+ await page.locator('.task-list').first().getByRole('link').first().click();
+ await page.getByRole("button",{name:"Обед · 20",exact:true}).click();
+ await page.getByRole("button",{name:"Забрать награду · +10 монет",exact:true}).click();
+ await page.getByRole("link",{name:"К Финни",exact:true}).click();
+ await expect(page.locator(".home-context-card")).toContainText("Задание выполнено");
+ await expect(page.locator(".home-context-card")).not.toContainText("Ближе к мечте");
+ await page.getByRole("button",{name:"Закрыть сообщение",exact:true}).click();
+ await expect(page.locator(".home-context-card")).toContainText("Спасибо за заботу!");
+ await expect(page.locator(".home-event-dismiss")).toHaveCount(0);
+ await page.reload();
+ await expect(page.locator(".home-context-card")).toContainText("Спасибо за заботу!");
+ await expect(page.locator(".home-event-dismiss")).toHaveCount(0);
+});
+test("reset is available in settings; cancelling preserves the save",async({page})=>{
+ await seed(page);await page.goto('/settings');
+ await page.getByRole('button',{name:'Начать игру сначала',exact:true}).click();
+ await page.getByRole('button',{name:'Отмена',exact:true}).click();
+ expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('finni.game-profile')!).id)).toBe('notice-test');
+ await page.getByRole('button',{name:'Начать игру сначала',exact:true}).click();
+ await page.getByRole('button',{name:'Сбросить и начать сначала',exact:true}).click();
+ await expect(page).toHaveURL(/\/pet\/create$/);
+ expect(await page.evaluate(()=>localStorage.getItem('finni.game-profile'))).toBeNull();
+});

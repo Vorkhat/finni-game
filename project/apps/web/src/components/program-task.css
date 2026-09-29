@@ -1,0 +1,70 @@
+.program-task .simulation-scene > img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+.program-task button img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.program-tokens,
+.program-zones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.program-token {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  font-size: 17px;
+  cursor: grab;
+}
+.program-token small {
+  display: block;
+  font-size: 13px;
+  font-weight: normal;
+}
+.program-task [aria-pressed="true"] {
+  outline: 3px solid #568aca;
+  background: #e0eeff;
+}
+.program-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  min-height: 130px;
+  border: 2px dashed #8daaca;
+  border-radius: 20px;
+  padding: 16px 8px;
+  background: #f5faff;
+  color: #1a3158;
+  font: inherit;
+  cursor: pointer;
+}
+.program-zone:focus-visible {
+  outline: 3px solid #568aca;
+}
+.program-placed {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.program-task .program-placed img {
+  width: 32px;
+  height: 32px;
+}
+.program-order {
+  background: #f5faff;
+  border-radius: 16px;
+  padding: 16px 16px 16px 38px;
+}
+.program-task .decision-choice {
+  margin-bottom: 12px;
+}

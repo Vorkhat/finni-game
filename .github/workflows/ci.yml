@@ -1,0 +1,23 @@
+name: Verify Finni
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: project
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: project/.node-version
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - run: corepack pnpm test
+      - run: corepack pnpm coverage
+      - run: corepack pnpm exec playwright install --with-deps chromium
+      - run: corepack pnpm e2e

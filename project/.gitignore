@@ -1,0 +1,10 @@
+node_modules/
+.pnpm-store/
+dist/
+test-results/
+playwright-report/
+.dev-logs/
+.node_modules-stage5-backup/
+.tooling/
+*.jks
+*.keystore

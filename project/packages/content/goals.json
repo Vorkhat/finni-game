@@ -1,0 +1,23 @@
+[
+  {
+    "id": "scooter",
+    "title": "Самокат",
+    "description": "Ветер в ушах и прогулки вместе с Финни.",
+    "cost": 200,
+    "assetId": "goal-scooter"
+  },
+  {
+    "id": "pet_house",
+    "title": "Домик Финни",
+    "description": "Свой уютный уголок для отдыха и игр.",
+    "cost": 300,
+    "assetId": "goal-pet-house"
+  },
+  {
+    "id": "space_trip",
+    "title": "Космическое путешествие",
+    "description": "Большая мечта — увидеть далёкие звёзды.",
+    "cost": 500,
+    "assetId": "goal-space-trip"
+  }
+]

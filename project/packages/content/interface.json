@@ -1,0 +1,28 @@
+{
+  "welcome": { "title": "Привет! Я Финни", "intro": "Давай заботиться обо мне и вместе учиться распоряжаться монетками.", "button": "Начать" },
+  "concepts": [
+    { "id": "needs", "title": "Нужно", "text": "То, без чего Финни не обойтись.", "assetId": "item-breakfast" },
+    { "id": "wants", "title": "Хочу", "text": "То, что радует, но иногда может подождать.", "assetId": "item-ball" },
+    { "id": "savings", "title": "Коплю", "text": "Монетки, которые помогают исполнить большую мечту.", "assetId": "icon-savings" }
+  ],
+  "stages": { "BABY": "Малыш", "EXPLORER": "Подросток", "FINNI_PRO": "Взрослый" },
+  "status": [
+    { "id": "satiety", "title": "Сытость", "assetId": "icon-satiety" },
+    { "id": "mood", "title": "Настроение", "assetId": "icon-mood" },
+    { "id": "care", "title": "Уход", "assetId": "icon-care" }
+  ],
+  "navigation": [
+    { "href": "/home", "title": "Дом", "assetId": "icon-home" },
+    { "href": "/tasks", "title": "Задания", "assetId": "icon-tasks" },
+    { "href": "/shop", "title": "Магазин", "assetId": "icon-shop" },
+    { "href": "/savings", "title": "Копилка", "assetId": "icon-savings" },
+    { "href": "/progress", "title": "Цели", "assetId": "icon-goals" }
+  ],
+  "sections": {
+    "/tasks": { "title": "Задания", "text": "Здесь будем пробовать разные решения и узнавать, что из них получится.", "assetId": "icon-tasks" },
+    "/shop": { "title": "Магазин", "text": "Здесь появятся нужные покупки и маленькие радости для Финни.", "assetId": "icon-shop" },
+    "/savings": { "title": "Копилка", "text": "Здесь будем откладывать монетки на большую мечту.", "assetId": "icon-savings" },
+    "/progress": { "title": "Цели и прогресс", "text": "Каждый маленький шаг помогает Финни расти и приближает мечту.", "assetId": "icon-goals" },
+    "/budget": { "title": "План на день", "text": "Скоро здесь можно будет распределить монетки: на нужное, на желания и на мечту.", "assetId": "icon-coin" }
+  }
+}

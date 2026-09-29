@@ -1,0 +1,443 @@
+[
+  {
+    "id": "assemble-budget",
+    "topic": "BUDGET_PLANNING",
+    "type": "allocate_budget",
+    "title": "Собери бюджет",
+    "intro": "У тебя 100 монет. Распредели их между «Нужно», «Хочу» и «Коплю». Оставь хотя бы 40 на нужное и 10 на мечту.",
+    "assetId": "icon-coin",
+    "initialState": {
+      "wallet": 100,
+      "allocations": {
+        "mandatory": 0,
+        "optional": 0,
+        "savings": 0
+      }
+    },
+    "actions": [
+      {
+        "id": "allocate",
+        "label": "Распределить монетки",
+        "kind": "allocate",
+        "feedbackCode": "budget-ready",
+        "retryFeedbackCode": "budget-revise"
+      }
+    ],
+    "successConditions": [
+      {
+        "metric": "totalAllocated",
+        "operator": "eq",
+        "value": 100
+      },
+      {
+        "metric": "mandatoryAllocated",
+        "operator": "gte",
+        "value": 40
+      },
+      {
+        "metric": "savingsAllocated",
+        "operator": "gte",
+        "value": 10
+      }
+    ],
+    "feedback": [
+      {
+        "code": "budget-ready",
+        "text": "Теперь у каждой монетки есть своё дело.",
+        "consequence": "План готов. В настоящую копилку монетки попадут после отдельного перевода."
+      },
+      {
+        "code": "budget-revise",
+        "text": "Нужные покупки лучше учитывать в плане заранее.",
+        "consequence": "Распределено {totalAllocated}. Осталось {unallocated}. Можно передвинуть монетки и оставить часть на мечту."
+      }
+    ],
+    "educationalGoal": "Разделять нужды, желания и накопления; отличать план от реального перевода.",
+    "reward": 10,
+    "recovery": {
+      "label": "Попробовать ещё",
+      "instruction": "Вернись к началу истории и посмотри, что изменится при другом выборе.",
+      "resetSimulation": true
+    },
+    "hint": "Сначала отложи на нужное и немного на мечту, а остаток — на желания."
+  },
+  {
+    "id": "needs-first",
+    "topic": "PAYMENTS_AND_PURCHASES",
+    "type": "prioritize",
+    "title": "Что сначала?",
+    "intro": "Есть 50 монет. Обед стоит 30, игрушка — 40. Выбери, что купить первым.",
+    "assetId": "item-lunch",
+    "initialState": {
+      "wallet": 50,
+      "items": [
+        {
+          "itemId": "lunch",
+          "price": 30,
+          "kind": "mandatory"
+        },
+        {
+          "itemId": "toy",
+          "price": 40,
+          "kind": "optional"
+        }
+      ]
+    },
+    "actions": [
+      {
+        "id": "lunch-first",
+        "label": "Сначала обед",
+        "kind": "buy",
+        "feedbackCode": "needs-covered",
+        "itemId": "lunch"
+      },
+      {
+        "id": "toy-first",
+        "label": "Сначала игрушка",
+        "kind": "buy",
+        "feedbackCode": "lunch-waits",
+        "itemId": "toy"
+      },
+      {
+        "id": "change-order",
+        "label": "Изменить порядок",
+        "kind": "reorder",
+        "feedbackCode": "needs-covered"
+      }
+    ],
+    "successConditions": [
+      {
+        "metric": "mandatoryPurchased",
+        "operator": "gte",
+        "value": 1
+      },
+      {
+        "metric": "wallet",
+        "operator": "gte",
+        "value": 0
+      }
+    ],
+    "feedback": [
+      {
+        "code": "needs-covered",
+        "text": "Обед уже есть. Игрушка может подождать.",
+        "consequence": "После обеда останется 20 монет. На игрушку нужно ещё 20."
+      },
+      {
+        "code": "lunch-waits",
+        "text": "На игрушку ушла большая часть монет.",
+        "consequence": "Останется 10, а для обеда нужно 30. Попробуй поменять порядок."
+      }
+    ],
+    "educationalGoal": "Замечать важные потребности до необязательных покупок; сравнивать последствия последовательности.",
+    "reward": 10,
+    "recovery": {
+      "label": "Попробовать ещё",
+      "instruction": "Вернись к началу истории и посмотри, что изменится при другом выборе.",
+      "resetSimulation": true
+    },
+    "hint": "Представь, что купил игрушку первой. Хватит ли потом монет на обед?"
+  },
+  {
+    "id": "save-for-scooter",
+    "topic": "SAVINGS",
+    "type": "savings_choice",
+    "title": "Накопи на самокат",
+    "intro": "Самокат стоит 200 монет. В копилке уже 80, в кошельке — 50. Сколько отправим к мечте?",
+    "assetId": "goal-scooter",
+    "initialState": {
+      "wallet": 50,
+      "savings": 80,
+      "goalCost": 200,
+      "goalId": "scooter"
+    },
+    "actions": [
+      {
+        "id": "save-10",
+        "label": "Отложить 10",
+        "kind": "deposit",
+        "feedbackCode": "saved-10",
+        "amount": 10
+      },
+      {
+        "id": "save-30",
+        "label": "Отложить 30",
+        "kind": "deposit",
+        "feedbackCode": "saved-30",
+        "amount": 30
+      },
+      {
+        "id": "save-50",
+        "label": "Отложить 50",
+        "kind": "deposit",
+        "feedbackCode": "saved-50",
+        "amount": 50
+      }
+    ],
+    "successConditions": [
+      {
+        "metric": "savingsDeposited",
+        "operator": "gte",
+        "value": 10
+      }
+    ],
+    "feedback": [
+      {
+        "code": "saved-10",
+        "text": "Часть монет уже отправилась к нашей мечте.",
+        "consequence": "В копилке 90, до самоката осталось 110, в кошельке 40."
+      },
+      {
+        "code": "saved-30",
+        "text": "Мечта стала ближе.",
+        "consequence": "В копилке 110, до самоката осталось 90, в кошельке 20."
+      },
+      {
+        "code": "saved-50",
+        "text": "Ты сделал большой шаг к самокату.",
+        "consequence": "В копилке 130, осталось накопить 70. В кошельке пока 0."
+      }
+    ],
+    "educationalGoal": "Увидеть, как размер перевода влияет на цель и доступный кошелёк.",
+    "reward": 10,
+    "recovery": {
+      "label": "Попробовать ещё",
+      "instruction": "Вернись к началу истории и посмотри, что изменится при другом выборе.",
+      "resetSimulation": true
+    },
+    "hint": "Чем больше отложишь сейчас, тем ближе мечта. Но немного монет оставь в кошельке."
+  },
+  {
+    "id": "fit-the-budget",
+    "topic": "BUDGET_PLANNING",
+    "type": "shopping_cart",
+    "title": "Уложись в бюджет",
+    "intro": "На покупки есть 70 монет. Собери корзину: сначала обед и уход, затем — что-нибудь приятное.",
+    "assetId": "icon-shop",
+    "initialState": {
+      "wallet": 70,
+      "items": [
+        {
+          "itemId": "lunch",
+          "price": 30,
+          "kind": "mandatory"
+        },
+        {
+          "itemId": "care",
+          "price": 15,
+          "kind": "mandatory"
+        },
+        {
+          "itemId": "toy",
+          "price": 45,
+          "kind": "optional"
+        },
+        {
+          "itemId": "icecream",
+          "price": 20,
+          "kind": "optional"
+        }
+      ]
+    },
+    "actions": [
+      {
+        "id": "edit-cart",
+        "label": "Добавить или убрать покупку",
+        "kind": "edit_cart",
+        "feedbackCode": "cart-ready",
+        "retryFeedbackCode": "cart-over"
+      }
+    ],
+    "successConditions": [
+      {
+        "metric": "cartTotal",
+        "operator": "lte",
+        "value": 70
+      },
+      {
+        "metric": "mandatoryPurchased",
+        "operator": "gte",
+        "value": 2
+      }
+    ],
+    "feedback": [
+      {
+        "code": "cart-ready",
+        "text": "Важные покупки поместились в бюджет.",
+        "consequence": "Корзина стоит {cartTotal}. Останется {wallet} монет."
+      },
+      {
+        "code": "cart-over",
+        "text": "Проверим, хватит ли монет и есть ли всё нужное.",
+        "consequence": "Корзина стоит {cartTotal}. Нужных покупок: {mandatoryPurchased} из двух. Не хватает монет: {shortage}. Попробуй другое сочетание."
+      }
+    ],
+    "educationalGoal": "Менять корзину, сравнивать сумму с лимитом и сохранять обязательные покупки.",
+    "reward": 10,
+    "recovery": {
+      "label": "Попробовать ещё",
+      "instruction": "Вернись к началу истории и посмотри, что изменится при другом выборе.",
+      "resetSimulation": true
+    },
+    "hint": "Сначала добавь нужные покупки, потом посмотри, сколько монет осталось на приятное."
+  },
+  {
+    "id": "plan-changed",
+    "topic": "PAYMENTS_AND_PURCHASES",
+    "type": "unexpected_expense",
+    "title": "План изменился",
+    "intro": "Есть 50 монет. Ты хотел мяч за 35, но понадобился уход за 25. Как изменим план?",
+    "assetId": "item-care",
+    "initialState": {
+      "wallet": 50,
+      "plannedItemId": "ball",
+      "items": [
+        {
+          "itemId": "ball",
+          "price": 35,
+          "kind": "optional"
+        },
+        {
+          "itemId": "care",
+          "price": 25,
+          "kind": "mandatory"
+        }
+      ]
+    },
+    "actions": [
+      {
+        "id": "care-now",
+        "label": "Сначала уход",
+        "kind": "buy",
+        "feedbackCode": "care-covered",
+        "itemId": "care"
+      },
+      {
+        "id": "ball-now",
+        "label": "Купить мяч",
+        "kind": "buy",
+        "feedbackCode": "care-short",
+        "itemId": "ball"
+      },
+      {
+        "id": "wait",
+        "label": "Отложить покупки",
+        "kind": "skip",
+        "feedbackCode": "wait-review"
+      }
+    ],
+    "successConditions": [
+      {
+        "metric": "mandatoryPurchased",
+        "operator": "gte",
+        "value": 1
+      },
+      {
+        "metric": "wallet",
+        "operator": "gte",
+        "value": 0
+      }
+    ],
+    "feedback": [
+      {
+        "code": "care-covered",
+        "text": "Ты учёл новую нужную покупку.",
+        "consequence": "После ухода останется 25. На мяч можно накопить ещё 10."
+      },
+      {
+        "code": "care-short",
+        "text": "После мяча на уход пока не хватает.",
+        "consequence": "Останется 15. Можно пересмотреть решение в этой истории."
+      },
+      {
+        "code": "wait-review",
+        "text": "Иногда полезно остановиться и подумать.",
+        "consequence": "Все 50 монет на месте. Уход всё ещё нужен — вернись к плану."
+      }
+    ],
+    "educationalGoal": "Пересматривать план при новых обстоятельствах; цена ухода здесь задана событием.",
+    "reward": 10,
+    "recovery": {
+      "label": "Попробовать ещё",
+      "instruction": "Вернись к началу истории и посмотри, что изменится при другом выборе.",
+      "resetSimulation": true
+    },
+    "hint": "Появилась новая нужная покупка. Что важнее оплатить сегодня?"
+  },
+  {
+    "id": "dream-or-now",
+    "topic": "SAVINGS",
+    "type": "goal_vs_want",
+    "title": "Мечта или сейчас?",
+    "intro": "У тебя 60 монет. До самоката осталось 50, а игра стоит 60. Как поступим?",
+    "assetId": "item-game",
+    "initialState": {
+      "wallet": 60,
+      "savings": 150,
+      "goalCost": 200,
+      "goalId": "scooter",
+      "items": [
+        {
+          "itemId": "game",
+          "price": 60,
+          "kind": "optional"
+        }
+      ]
+    },
+    "actions": [
+      {
+        "id": "buy-game",
+        "label": "Купить игру",
+        "kind": "buy",
+        "feedbackCode": "game-now",
+        "itemId": "game"
+      },
+      {
+        "id": "save-50",
+        "label": "Отложить 50",
+        "kind": "deposit",
+        "feedbackCode": "dream-ready",
+        "amount": 50
+      },
+      {
+        "id": "save-part",
+        "label": "Отложить часть: 30",
+        "kind": "deposit",
+        "feedbackCode": "dream-closer",
+        "amount": 30
+      }
+    ],
+    "successConditions": [
+      {
+        "metric": "savingsDeposited",
+        "operator": "gte",
+        "value": 30
+      }
+    ],
+    "feedback": [
+      {
+        "code": "game-now",
+        "text": "Игра порадует сейчас, а мечта подождёт.",
+        "consequence": "В кошельке 0, до самоката всё ещё 50. Можно выполнить задание и заработать ещё монетки."
+      },
+      {
+        "code": "dream-ready",
+        "text": "На мечту уже хватает!",
+        "consequence": "В копилке 200, в кошельке осталось 10."
+      },
+      {
+        "code": "dream-closer",
+        "text": "Ты приблизил мечту и оставил монеты на сегодня.",
+        "consequence": "В копилке 180, до цели 20, в кошельке 30."
+      }
+    ],
+    "educationalGoal": "Сравнивать сиюминутное желание с целью, понимать цену отложенного решения.",
+    "reward": 10,
+    "recovery": {
+      "label": "Попробовать ещё",
+      "instruction": "Вернись к началу истории и посмотри, что изменится при другом выборе.",
+      "resetSimulation": true
+    },
+    "hint": "Отложенные монетки приближают мечту. Игру можно будет купить позже."
+  }
+]

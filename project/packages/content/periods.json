@@ -1,0 +1,123 @@
+{
+  "taskIds": [
+    "assemble-budget",
+    "needs-first",
+    "save-for-scooter",
+    "fit-the-budget",
+    "plan-changed",
+    "dream-or-now"
+  ],
+  "dailyTasks": {
+    "1": {
+      "stories": [
+        "assemble-budget"
+      ],
+      "situations": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06"
+      ]
+    },
+    "2": {
+      "stories": [
+        "needs-first"
+      ],
+      "situations": [
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12"
+      ]
+    },
+    "3": {
+      "stories": [
+        "fit-the-budget"
+      ],
+      "situations": [
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18"
+      ]
+    },
+    "4": {
+      "stories": [
+        "plan-changed"
+      ],
+      "situations": [
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24"
+      ]
+    },
+    "5": {
+      "stories": [
+        "save-for-scooter",
+        "dream-or-now"
+      ],
+      "situations": [
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30"
+      ]
+    }
+  },
+  "events": {
+    "2": "event_bonus",
+    "3": "event_discount",
+    "4": "event_required_expense"
+  },
+  "mandatoryNeeds": [
+    {
+      "id": "food",
+      "purchaseIds": [
+        "breakfast",
+        "lunch",
+        "snack"
+      ]
+    }
+  ],
+  "extraCareNeed": {
+    "id": "care",
+    "purchaseIds": [
+      "care"
+    ]
+  },
+  "needsText": "Сегодня нужно хотя бы раз покормить Финни. Играй и заботься о чистоте, когда это ему нужно.",
+  "extraNeedsText": "Сегодня ещё понадобится уход: можно выбрать его в магазине или в событии.",
+  "evolution": {
+    "EXPLORER": {
+      "title": "Финни подрос! ✨",
+      "text": "Вы завершили четыре игровых дня. Финни стал подростком! Впереди новые истории и мечты."
+    },
+    "FINNI_PRO": {
+      "title": "Вот это да! 🌟",
+      "text": "Вы завершили восемь игровых дней. Финни стал взрослым! Впереди ещё два дня вашей программы."
+    }
+  },
+  "topics": {
+    "BUDGET_PLANNING": "Планирование бюджета",
+    "SAVINGS": "Накопления",
+    "PAYMENTS_AND_PURCHASES": "Покупки"
+  },
+  "learningStatuses": {
+    "new": "Впереди знакомство",
+    "started": "Начали изучать",
+    "practising": "Практикуемся",
+    "familiar": "Уже знакомо"
+  },
+  "recovery": "Завтра можно сначала позаботиться о нужном, отложить монетки и попробовать новое задание."
+}

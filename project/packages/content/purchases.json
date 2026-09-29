@@ -1,0 +1,103 @@
+[
+  {
+    "id": "breakfast",
+    "title": "Завтрак",
+    "kind": "mandatory",
+    "price": 20,
+    "effect": {
+      "satiety": 20
+    },
+    "assetId": "item-breakfast"
+  },
+  {
+    "id": "lunch",
+    "title": "Обед",
+    "kind": "mandatory",
+    "price": 30,
+    "effect": {
+      "satiety": 30
+    },
+    "assetId": "item-lunch"
+  },
+  {
+    "id": "care",
+    "title": "Уход",
+    "kind": "mandatory",
+    "price": 15,
+    "effect": {
+      "care": 15,
+      "mood": 15
+    },
+    "assetId": "item-care"
+  },
+  {
+    "id": "snack",
+    "title": "Перекус",
+    "kind": "mandatory",
+    "price": 10,
+    "effect": {
+      "satiety": 10
+    },
+    "assetId": "item-snack"
+  },
+  {
+    "id": "ball",
+    "title": "Мяч",
+    "kind": "optional",
+    "price": 35,
+    "effect": {
+      "mood": 20
+    },
+    "assetId": "item-ball"
+  },
+  {
+    "id": "cap",
+    "title": "Кепка",
+    "kind": "optional",
+    "price": 30,
+    "effect": {
+      "mood": 15
+    },
+    "assetId": "item-cap"
+  },
+  {
+    "id": "toy",
+    "title": "Игрушка",
+    "kind": "optional",
+    "price": 45,
+    "effect": {
+      "mood": 25
+    },
+    "assetId": "item-toy"
+  },
+  {
+    "id": "icecream",
+    "title": "Мороженое",
+    "kind": "optional",
+    "price": 20,
+    "effect": {
+      "mood": 10
+    },
+    "assetId": "item-icecream"
+  },
+  {
+    "id": "game",
+    "title": "Игра",
+    "kind": "optional",
+    "price": 60,
+    "effect": {
+      "mood": 30
+    },
+    "assetId": "item-game"
+  },
+  {
+    "id": "balloon",
+    "title": "Шарик",
+    "kind": "optional",
+    "price": 15,
+    "effect": {
+      "mood": 10
+    },
+    "assetId": "item-balloon"
+  }
+]

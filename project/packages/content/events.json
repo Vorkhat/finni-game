@@ -1,0 +1,152 @@
+[
+  {
+    "id": "event_discount",
+    "eventType": "discount",
+    "title": "Мяч со скидкой",
+    "intro": "Сегодня мяч стоит меньше. Подходит ли покупка твоему плану?",
+    "assetId": "item-ball",
+    "context": {
+      "itemId": "ball",
+      "amount": 28,
+      "discountPercent": 20
+    },
+    "choices": [
+      {
+        "id": "buy",
+        "label": "Рассмотреть покупку",
+        "outcome": "purchase",
+        "feedback": "Скидка помогает сэкономить, если покупка была нужна."
+      },
+      {
+        "id": "skip",
+        "label": "Пройти мимо",
+        "outcome": "skip",
+        "feedback": "Можно сохранить монетки для другого дела."
+      }
+    ],
+    "kind": "decision"
+  },
+  {
+    "id": "event_required_expense",
+    "eventType": "required_expense",
+    "title": "Немного заботы",
+    "intro": "Финни понадобился уход за 25 монет. Посмотрим на план?",
+    "assetId": "item-care",
+    "context": {
+      "itemId": "care",
+      "amount": 25
+    },
+    "choices": [
+      {
+        "id": "care",
+        "label": "Учесть уход",
+        "outcome": "purchase",
+        "feedback": "Нужные покупки лучше учитывать в плане заранее."
+      },
+      {
+        "id": "review",
+        "label": "Пересмотреть план",
+        "outcome": "skip",
+        "feedback": "Проверь, какую необязательную покупку можно отложить."
+      }
+    ],
+    "kind": "decision"
+  },
+  {
+    "id": "event_bonus",
+    "eventType": "bonus",
+    "title": "Приятный бонус",
+    "intro": "Ты помог с общим делом. Можно получить 10 игровых монет!",
+    "assetId": "icon-coin",
+    "context": {
+      "amount": 10
+    },
+    "choices": [
+      {
+        "id": "receive",
+        "label": "Принять монетки",
+        "outcome": "income",
+        "feedback": "Дополнительный доход тоже стоит распределить."
+      }
+    ],
+    "kind": "decision"
+  },
+  {
+    "id": "event_impulse",
+    "eventType": "impulse",
+    "title": "Яркий шарик",
+    "intro": "Какой красивый шарик! Он стоит 15 монет. Что важнее сейчас?",
+    "assetId": "item-balloon",
+    "context": {
+      "itemId": "balloon",
+      "amount": 15
+    },
+    "choices": [
+      {
+        "id": "buy",
+        "label": "Рассмотреть покупку",
+        "outcome": "purchase",
+        "feedback": "Перед покупкой сравни цену со своим планом."
+      },
+      {
+        "id": "wait",
+        "label": "Подождать",
+        "outcome": "skip",
+        "feedback": "Желание может подождать, а монетки останутся у тебя."
+      }
+    ],
+    "kind": "decision"
+  },
+  {
+    "id": "event_skip",
+    "eventType": "skip",
+    "title": "Можно пройти мимо",
+    "intro": "Новая игрушка стоит 45 монет. Покупать её необязательно.",
+    "assetId": "item-toy",
+    "context": {
+      "itemId": "toy",
+      "amount": 45
+    },
+    "choices": [
+      {
+        "id": "skip",
+        "label": "Сохранить монетки",
+        "outcome": "skip",
+        "feedback": "Отказ от покупки тоже бывает полезным решением."
+      },
+      {
+        "id": "consider",
+        "label": "Рассмотреть игрушку",
+        "outcome": "purchase",
+        "feedback": "Проверь, останется ли достаточно на нужное."
+      }
+    ],
+    "kind": "decision"
+  },
+  {
+    "id": "event_goal",
+    "eventType": "goal",
+    "title": "Шаг к мечте",
+    "intro": "Посмотри на свою цель. Хочешь отправить к ней ещё 10 монет?",
+    "assetId": "icon-goals",
+    "context": {
+      "amount": 10,
+      "usesSelectedGoal": true
+    },
+    "choices": [
+      {
+        "id": "save",
+        "label": "Отложить 10",
+        "outcome": "deposit",
+        "feedback": "Часть монет уже отправилась к нашей мечте."
+      },
+      {
+        "id": "later",
+        "label": "Позже",
+        "outcome": "skip",
+        "feedback": "Можно вернуться к копилке после важных покупок."
+      }
+    ],
+    "kind": "decision"
+  }
+]

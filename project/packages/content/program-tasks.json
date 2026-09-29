@@ -1,0 +1,1351 @@
+[
+  {
+    "title": "Что сначала?",
+    "question": "Финни голоден. Есть 30 монет: обед стоит 20, игрушка — 30. Передвинь первую покупку к кошельку.",
+    "hero": "sandwich",
+    "type": "select",
+    "board": {
+      "wallet": 30,
+      "choices": [
+        {
+          "id": "food",
+          "label": "Обед · 20",
+          "asset": "sandwich",
+          "cost": 20
+        },
+        {
+          "id": "toy",
+          "label": "Игрушка · 30",
+          "asset": "rocket",
+          "cost": 30
+        }
+      ]
+    },
+    "solution": {
+      "accepted": [
+        "food"
+      ],
+      "remaining": 10
+    },
+    "explanation": "После обеда останется 10. На игрушку можно копить дальше.",
+    "hint": "Выбери то, что нужно голодному Финни.",
+    "theme": "Покупать необходимое прежде необязательного.",
+    "sourceId": "needs-first",
+    "sourceStatus": "адаптировано из архива",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T01",
+    "day": 1,
+    "slot": 1,
+    "level": 1,
+    "petStage": "Малыш",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "sandwich",
+      "coin",
+      "rocket",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "sandwich": "Графика/Уже были/sandwich.png",
+      "coin": "Графика/Уже были/coin.png",
+      "rocket": "Графика/Уже были/rocket.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 01/T01 — Что сначала.txt"
+  },
+  {
+    "title": "У каждой монетки своё дело",
+    "question": "Разложи картинки: обед — в «Нужно», игрушку — в «Хочу», самокат мечты — в «Коплю».",
+    "hero": "wallet",
+    "type": "sort",
+    "board": {
+      "zones": [
+        "Нужно",
+        "Хочу",
+        "Коплю"
+      ],
+      "items": [
+        {
+          "id": "meal",
+          "label": "Обед",
+          "asset": "sandwich"
+        },
+        {
+          "id": "toy",
+          "label": "Игрушка",
+          "asset": "rocket"
+        },
+        {
+          "id": "goal",
+          "label": "Самокат мечты",
+          "asset": "scooter"
+        }
+      ]
+    },
+    "solution": {
+      "mapping": {
+        "meal": "Нужно",
+        "toy": "Хочу",
+        "goal": "Коплю"
+      }
+    },
+    "explanation": "В плане есть место и нужному, и приятному, и будущей мечте.",
+    "hint": "Подумай: это нужно сейчас или мы собираем на потом?",
+    "theme": "Различать назначения денег.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T02",
+    "day": 1,
+    "slot": 2,
+    "level": 1,
+    "petStage": "Малыш",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "wallet",
+      "coin",
+      "sandwich",
+      "rocket",
+      "scooter",
+      "piggy"
+    ],
+    "images": {
+      "wallet": "Графика/Уже были/wallet.png",
+      "coin": "Графика/Уже были/coin.png",
+      "sandwich": "Графика/Уже были/sandwich.png",
+      "rocket": "Графика/Уже были/rocket.png",
+      "scooter": "Графика/Уже были/scooter.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 01/T02 — У каждой монетки своё дело.txt"
+  },
+  {
+    "title": "Покупаем по списку",
+    "question": "Нужны мыло и тетрадь. Положи их в корзину. Наклейки пока оставь на полке.",
+    "hero": "notebook",
+    "type": "cart",
+    "board": {
+      "wallet": 10,
+      "items": [
+        {
+          "id": "soap",
+          "label": "Мыло",
+          "asset": "soap",
+          "cost": 5
+        },
+        {
+          "id": "notebook",
+          "label": "Тетрадь",
+          "asset": "notebook",
+          "cost": 5
+        },
+        {
+          "id": "stickers",
+          "label": "Наклейки",
+          "asset": "stickers",
+          "cost": 5
+        }
+      ]
+    },
+    "solution": {
+      "acceptedSets": [
+        [
+          "soap",
+          "notebook"
+        ]
+      ],
+      "total": 10,
+      "remaining": 0
+    },
+    "explanation": "Деньги потрачены на обе нужные вещи из списка.",
+    "hint": "Проверь две картинки в списке.",
+    "theme": "Следовать списку покупок.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T03",
+    "day": 2,
+    "slot": 1,
+    "level": 1,
+    "petStage": "Малыш",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "notebook",
+      "coin",
+      "soap",
+      "stickers",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "notebook": "Графика/Уже были/notebook.png",
+      "coin": "Графика/Уже были/coin.png",
+      "soap": "Графика/Уже были/soap.png",
+      "stickers": "Графика/Уже были/stickers.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 02/T03 — Покупаем по списку.txt"
+  },
+  {
+    "title": "Собери бюджет",
+    "question": "Есть 100 монет. Положи 50 на заботу, 20 на приятное и 30 на мечту. Передвигай готовые стопки.",
+    "hero": "wallet",
+    "type": "allocate",
+    "board": {
+      "wallet": 100,
+      "tokens": [
+        {
+          "id": "a",
+          "value": 50
+        },
+        {
+          "id": "b",
+          "value": 20
+        },
+        {
+          "id": "c",
+          "value": 30
+        }
+      ],
+      "zones": [
+        "Забота",
+        "Приятное",
+        "Мечта"
+      ]
+    },
+    "solution": {
+      "mapping": {
+        "a": "Забота",
+        "b": "Приятное",
+        "c": "Мечта"
+      },
+      "totals": {
+        "Забота": 50,
+        "Приятное": 20,
+        "Мечта": 30
+      }
+    },
+    "explanation": "Монеты распределены заранее: забота обеспечена, мечта стала ближе.",
+    "hint": "На каждой стопке уже написана сумма.",
+    "theme": "Создавать понятный план расходов.",
+    "sourceId": "assemble-budget",
+    "sourceStatus": "адаптировано из архива",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T04",
+    "day": 2,
+    "slot": 2,
+    "level": 1,
+    "petStage": "Малыш",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "wallet",
+      "coin",
+      "piggy"
+    ],
+    "images": {
+      "wallet": "Графика/Уже были/wallet.png",
+      "coin": "Графика/Уже были/coin.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 02/T04 — Собери бюджет.txt"
+  },
+  {
+    "title": "Сдача в копилку",
+    "question": "Обед уже куплен. Осталась сдача — 5 монет. Перенеси её в копилку на мечту.",
+    "hero": "piggy",
+    "type": "transfer",
+    "board": {
+      "wallet": 5,
+      "saved": 0,
+      "goal": 150,
+      "goalAsset": "scooter",
+      "tokens": [
+        {
+          "id": "change",
+          "value": 5
+        }
+      ],
+      "zones": [
+        "Кошелёк",
+        "Копилка"
+      ]
+    },
+    "solution": {
+      "mapping": {
+        "change": "Копилка"
+      },
+      "savedAfter": 5,
+      "walletAfter": 0
+    },
+    "explanation": "Даже небольшая сумма приближает запланированную покупку.",
+    "hint": "Нужные покупки уже оплачены.",
+    "theme": "Регулярно сохранять небольшие остатки.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T05",
+    "day": 3,
+    "slot": 1,
+    "level": 1,
+    "petStage": "Малыш",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "piggy",
+      "coin",
+      "wallet"
+    ],
+    "images": {
+      "piggy": "Графика/Уже были/piggy.png",
+      "coin": "Графика/Уже были/coin.png",
+      "wallet": "Графика/Уже были/wallet.png"
+    },
+    "textFile": "День 03/T05 — Сдача в копилку.txt"
+  },
+  {
+    "title": "Накопи на самокат",
+    "question": "В копилке 130 из 150 монет. Забота оплачена, свободны 20. Выбери, сколько отложить: 5, 10 или 20.",
+    "hero": "scooter",
+    "type": "select",
+    "board": {
+      "wallet": 20,
+      "saved": 130,
+      "goal": 150,
+      "choices": [
+        {
+          "id": "save5",
+          "label": "Отложить 5",
+          "asset": "piggy",
+          "amount": 5
+        },
+        {
+          "id": "save10",
+          "label": "Отложить 10",
+          "asset": "piggy",
+          "amount": 10
+        },
+        {
+          "id": "save20",
+          "label": "Отложить 20",
+          "asset": "piggy",
+          "amount": 20
+        }
+      ]
+    },
+    "solution": {
+      "accepted": [
+        "save5",
+        "save10",
+        "save20"
+      ],
+      "outcomes": {
+        "save5": {
+          "saved": 135,
+          "wallet": 15
+        },
+        "save10": {
+          "saved": 140,
+          "wallet": 10
+        },
+        "save20": {
+          "saved": 150,
+          "wallet": 0
+        }
+      }
+    },
+    "explanation": "Каждый вариант приближает мечту. При переводе 20 монет на самокат уже хватит.",
+    "hint": "Все три шага полезны; посмотри, как меняется полоска цели.",
+    "theme": "Видеть результат разного размера накоплений.",
+    "sourceId": "save-for-scooter",
+    "sourceStatus": "адаптировано из архива",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T06",
+    "day": 3,
+    "slot": 2,
+    "level": 1,
+    "petStage": "Малыш",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "scooter",
+      "coin",
+      "piggy",
+      "wallet"
+    ],
+    "images": {
+      "scooter": "Графика/Уже были/scooter.png",
+      "coin": "Графика/Уже были/coin.png",
+      "piggy": "Графика/Уже были/piggy.png",
+      "wallet": "Графика/Уже были/wallet.png"
+    },
+    "textFile": "День 03/T06 — Накопи на самокат.txt"
+  },
+  {
+    "title": "Найди выгодную цену",
+    "question": "Две одинаковые тетради стоят 5 и 8 монет. Выбери одну подешевле, затем отправь сдачу в копилку.",
+    "hero": "notebook",
+    "type": "buy_then_save",
+    "board": {
+      "wallet": 10,
+      "choices": [
+        {
+          "id": "near",
+          "label": "Тетрадь · 8",
+          "asset": "notebook",
+          "cost": 8
+        },
+        {
+          "id": "other",
+          "label": "Тетрадь · 5",
+          "asset": "notebook",
+          "cost": 5
+        }
+      ]
+    },
+    "solution": {
+      "steps": [
+        {
+          "select": "other"
+        },
+        {
+          "transferRemainingTo": "Копилка"
+        }
+      ],
+      "savedAfter": 5
+    },
+    "explanation": "Купили ту же тетрадь дешевле и сохранили остаток.",
+    "hint": "Качество одинаковое. Сравни только цены.",
+    "theme": "Соединять сравнение цен с накоплением остатка.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T07",
+    "day": 4,
+    "slot": 1,
+    "level": 2,
+    "petStage": "Малыш",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "notebook",
+      "coin",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "notebook": "Графика/Уже были/notebook.png",
+      "coin": "Графика/Уже были/coin.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 04/T07 — Найди выгодную цену.txt"
+  },
+  {
+    "title": "Уложись в бюджет",
+    "question": "Есть 40 монет. Собери обед за 20 и уход за 15. Мороженое за 5 можно добавить, если хочешь.",
+    "hero": "food",
+    "type": "cart",
+    "board": {
+      "wallet": 40,
+      "items": [
+        {
+          "id": "meal",
+          "label": "Обед",
+          "asset": "sandwich",
+          "cost": 20
+        },
+        {
+          "id": "care",
+          "label": "Уход",
+          "asset": "brush",
+          "cost": 15
+        },
+        {
+          "id": "ice",
+          "label": "Мороженое",
+          "asset": "icecream",
+          "cost": 5
+        },
+        {
+          "id": "toy",
+          "label": "Игрушка",
+          "asset": "rocket",
+          "cost": 30
+        }
+      ]
+    },
+    "solution": {
+      "acceptedSets": [
+        [
+          "meal",
+          "care"
+        ],
+        [
+          "meal",
+          "care",
+          "ice"
+        ]
+      ],
+      "maxTotal": 40,
+      "required": [
+        "meal",
+        "care"
+      ]
+    },
+    "explanation": "Обед и уход обеспечены. Остаток можно сохранить или потратить на запланированное приятное.",
+    "hint": "Сначала добавь обе нужные покупки.",
+    "theme": "Укладываться в сумму и допускать несколько разумных решений.",
+    "sourceId": "fit-the-budget",
+    "sourceStatus": "адаптировано из архива",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T08",
+    "day": 4,
+    "slot": 2,
+    "level": 2,
+    "petStage": "Малыш",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "food",
+      "coin",
+      "sandwich",
+      "brush",
+      "icecream",
+      "rocket",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "food": "Графика/Уже были/food.png",
+      "coin": "Графика/Уже были/coin.png",
+      "sandwich": "Графика/Уже были/sandwich.png",
+      "brush": "Графика/Уже были/brush.png",
+      "icecream": "Графика/Уже были/icecream.png",
+      "rocket": "Графика/Уже были/rocket.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 04/T08 — Уложись в бюджет.txt"
+  },
+  {
+    "title": "Сравни полную цену",
+    "question": "Книга с доставкой обойдётся в 10 монет. Такая же рядом — в 8. Выбери покупку с меньшим итогом.",
+    "hero": "parcel",
+    "type": "select",
+    "board": {
+      "wallet": 10,
+      "choices": [
+        {
+          "id": "delivery",
+          "label": "С доставкой · всего 10",
+          "asset": "parcel",
+          "cost": 10
+        },
+        {
+          "id": "local",
+          "label": "Рядом · всего 8",
+          "asset": "book",
+          "cost": 8
+        }
+      ]
+    },
+    "solution": {
+      "accepted": [
+        "local"
+      ],
+      "remaining": 2
+    },
+    "explanation": "Смотрим на всю сумму, а не только на цену самой книги.",
+    "hint": "Итоги уже посчитаны на карточках.",
+    "theme": "Сравнивать полную стоимость покупки.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T09",
+    "day": 5,
+    "slot": 1,
+    "level": 2,
+    "petStage": "Подросток",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "parcel",
+      "coin",
+      "book",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "parcel": "Графика/Новые PNG/parcel.png",
+      "coin": "Графика/Уже были/coin.png",
+      "book": "Графика/Уже были/book.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 05/T09 — Сравни полную цену.txt"
+  },
+  {
+    "title": "Обеды на два дня",
+    "question": "Есть две стопки по 20 монет. Один обед стоит 20. Положи по стопке в конверты «Сегодня» и «Завтра».",
+    "hero": "calendar",
+    "type": "allocate",
+    "board": {
+      "wallet": 40,
+      "tokens": [
+        {
+          "id": "a",
+          "value": 20
+        },
+        {
+          "id": "b",
+          "value": 20
+        }
+      ],
+      "zones": [
+        "Сегодня",
+        "Завтра"
+      ]
+    },
+    "solution": {
+      "zoneTotals": {
+        "Сегодня": 20,
+        "Завтра": 20
+      },
+      "allTokens": true
+    },
+    "explanation": "На оба обеда деньги отложены. Завтрашние монеты не свободны для другой покупки.",
+    "hint": "Каждому дню нужна одна стопка.",
+    "theme": "Планировать расходы за пределами текущего дня.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T10",
+    "day": 5,
+    "slot": 2,
+    "level": 2,
+    "petStage": "Подросток",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "calendar",
+      "coin",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "calendar": "Графика/Новые PNG/calendar.png",
+      "coin": "Графика/Уже были/coin.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 05/T10 — Обеды на два дня.txt"
+  },
+  {
+    "title": "Запас на неожиданности",
+    "question": "Нужное оплачено. Остались 20 монет двумя стопками. Положи 10 на мечту, 10 — на внезапный ремонт.",
+    "hero": "reserve-jar",
+    "type": "allocate",
+    "board": {
+      "wallet": 20,
+      "tokens": [
+        {
+          "id": "a",
+          "value": 10
+        },
+        {
+          "id": "b",
+          "value": 10
+        }
+      ],
+      "zones": [
+        "Мечта",
+        "Запас"
+      ]
+    },
+    "solution": {
+      "zoneTotals": {
+        "Мечта": 10,
+        "Запас": 10
+      },
+      "allTokens": true
+    },
+    "explanation": "Деньги работают на две цели: мечту и защиту от неожиданного расхода.",
+    "hint": "Стопки одинаковые — по одной в каждую область.",
+    "theme": "Отличать накопления на цель от резерва.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T11",
+    "day": 6,
+    "slot": 1,
+    "level": 2,
+    "petStage": "Подросток",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "reserve-jar",
+      "coin",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "reserve-jar": "Графика/Новые PNG/reserve-jar.png",
+      "coin": "Графика/Уже были/coin.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 06/T11 — Запас на неожиданности.txt"
+  },
+  {
+    "title": "План изменился",
+    "question": "Есть 30 монет. Планировали игрушку, но срочно понадобился уход за 15. Выбери уход, остаток сохрани.",
+    "hero": "brush",
+    "type": "buy_then_save",
+    "board": {
+      "wallet": 30,
+      "choices": [
+        {
+          "id": "care",
+          "label": "Нужный уход · 15",
+          "asset": "brush",
+          "cost": 15
+        },
+        {
+          "id": "toy",
+          "label": "Игрушка · 30",
+          "asset": "rocket",
+          "cost": 30
+        }
+      ]
+    },
+    "solution": {
+      "steps": [
+        {
+          "select": "care"
+        },
+        {
+          "transferRemainingTo": "Копилка"
+        }
+      ],
+      "savedAfter": 15
+    },
+    "explanation": "Новый нужный расход учтён, а оставшиеся 15 монет сохранены.",
+    "hint": "Какой расход появился неожиданно и нужен сегодня?",
+    "theme": "Пересматривать план при новой необходимости.",
+    "sourceId": "plan-changed",
+    "sourceStatus": "адаптировано из архива",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T12",
+    "day": 6,
+    "slot": 2,
+    "level": 2,
+    "petStage": "Подросток",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "brush",
+      "coin",
+      "rocket",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "brush": "Графика/Уже были/brush.png",
+      "coin": "Графика/Уже были/coin.png",
+      "rocket": "Графика/Уже были/rocket.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 06/T12 — План изменился.txt"
+  },
+  {
+    "title": "Проверь чек",
+    "question": "Купили одно мыло. В чеке указаны два. Нажми на лишнюю покупку, чтобы вместе со взрослым уточнить сумму.",
+    "hero": "receipt",
+    "type": "find_extra",
+    "board": {
+      "purchased": [
+        "soap1"
+      ],
+      "rows": [
+        {
+          "id": "soap1",
+          "label": "Мыло · 5",
+          "asset": "soap",
+          "cost": 5
+        },
+        {
+          "id": "soap2",
+          "label": "Мыло · 5",
+          "asset": "soap",
+          "cost": 5
+        }
+      ],
+      "displayedTotal": 10
+    },
+    "solution": {
+      "accepted": [
+        "soap2"
+      ],
+      "correctTotal": 5
+    },
+    "explanation": "Сначала уточним чек. За одну покупку не нужно платить дважды.",
+    "hint": "Сколько кусочков мыла действительно взяли?",
+    "theme": "Сверять оплату с фактической покупкой.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T13",
+    "day": 7,
+    "slot": 1,
+    "level": 3,
+    "petStage": "Подросток",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "receipt",
+      "coin",
+      "soap",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "receipt": "Графика/Новые PNG/receipt.png",
+      "coin": "Графика/Уже были/coin.png",
+      "soap": "Графика/Уже были/soap.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 07/T13 — Проверь чек.txt"
+  },
+  {
+    "title": "Платёж повторяется",
+    "question": "Игра берёт по 5 монет сегодня и завтра. Передвинь по стопке в оба дня, чтобы увидеть весь расход.",
+    "hero": "calendar",
+    "type": "allocate",
+    "board": {
+      "wallet": 10,
+      "tokens": [
+        {
+          "id": "a",
+          "value": 5
+        },
+        {
+          "id": "b",
+          "value": 5
+        }
+      ],
+      "zones": [
+        "Сегодня",
+        "Завтра"
+      ]
+    },
+    "solution": {
+      "zoneTotals": {
+        "Сегодня": 5,
+        "Завтра": 5
+      },
+      "allTokens": true,
+      "total": 10
+    },
+    "explanation": "Маленький повторный платёж за два дня расходует уже 10 монет. Можно решить, нужна ли такая игра.",
+    "hint": "Платёж будет не один раз.",
+    "theme": "Видеть суммарный расход повторных платежей.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T14",
+    "day": 7,
+    "slot": 2,
+    "level": 3,
+    "petStage": "Подросток",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "calendar",
+      "coin",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "calendar": "Графика/Новые PNG/calendar.png",
+      "coin": "Графика/Уже были/coin.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 07/T14 — Платёж повторяется.txt"
+  },
+  {
+    "title": "Подарок к заказу",
+    "question": "Нужно только мыло. Выбери подходящую корзину: мыло за 5 или ненужный набор за 15 с подарком.",
+    "hero": "parcel",
+    "type": "select",
+    "board": {
+      "wallet": 15,
+      "choices": [
+        {
+          "id": "soap",
+          "label": "Мыло · всего 5",
+          "asset": "soap",
+          "cost": 5
+        },
+        {
+          "id": "bundle",
+          "label": "Набор с подарком · всего 15",
+          "asset": "parcel",
+          "cost": 15
+        }
+      ]
+    },
+    "solution": {
+      "accepted": [
+        "soap"
+      ],
+      "remaining": 10
+    },
+    "explanation": "Подарок не окупает ненужные покупки. Выбираем то, за чем пришли.",
+    "hint": "Сравни, что нужно и сколько придётся заплатить.",
+    "theme": "Оценивать предложение по итоговым тратам.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T15",
+    "day": 8,
+    "slot": 1,
+    "level": 3,
+    "petStage": "Подросток",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "parcel",
+      "coin",
+      "soap",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "parcel": "Графика/Новые PNG/parcel.png",
+      "coin": "Графика/Уже были/coin.png",
+      "soap": "Графика/Уже были/soap.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 08/T15 — Подарок к заказу.txt"
+  },
+  {
+    "title": "Покупка на экране",
+    "question": "Расставь шаги перед платной покупкой в игре: проверить цену со взрослым, решить по плану, затем подтвердить.",
+    "hero": "phone",
+    "type": "order",
+    "board": {
+      "items": [
+        {
+          "id": "confirm",
+          "label": "Подтвердить одобренную покупку",
+          "asset": "lock"
+        },
+        {
+          "id": "check",
+          "label": "Со взрослым проверить цену",
+          "asset": "receipt"
+        },
+        {
+          "id": "decide",
+          "label": "Решить, подходит ли трата",
+          "asset": "wallet"
+        }
+      ]
+    },
+    "solution": {
+      "order": [
+        "check",
+        "decide",
+        "confirm"
+      ]
+    },
+    "explanation": "Настоящие деньги тратим только после проверки и совместного решения. От покупки можно отказаться.",
+    "hint": "Что нужно узнать до подтверждения оплаты?",
+    "theme": "Делать осознанную цифровую покупку.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T16",
+    "day": 8,
+    "slot": 2,
+    "level": 3,
+    "petStage": "Подросток",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "phone",
+      "coin",
+      "lock",
+      "receipt",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "phone": "Графика/Уже были/phone.png",
+      "coin": "Графика/Уже были/coin.png",
+      "lock": "Графика/Новые PNG/lock.png",
+      "receipt": "Графика/Новые PNG/receipt.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 08/T16 — Покупка на экране.txt"
+  },
+  {
+    "title": "Новый план мечты",
+    "question": "Финни решил копить на поездку вместо игрушки. Перенеси сохранённые 20 монет к новой цели.",
+    "hero": "tent",
+    "type": "transfer",
+    "board": {
+      "wallet": 0,
+      "saved": 20,
+      "tokens": [
+        {
+          "id": "savings",
+          "value": 20
+        }
+      ],
+      "zones": [
+        "Игрушка",
+        "Поездка"
+      ],
+      "initialZone": "Игрушка"
+    },
+    "solution": {
+      "mapping": {
+        "savings": "Поездка"
+      },
+      "savedAfter": 20
+    },
+    "explanation": "Название цели изменилось, а все 20 монет остались в накоплениях.",
+    "hint": "Мы меняем план, а не тратим деньги.",
+    "theme": "Менять цель с сохранением накоплений.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T17",
+    "day": 9,
+    "slot": 1,
+    "level": 3,
+    "petStage": "Взрослый Финни",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "tent",
+      "coin",
+      "wallet",
+      "piggy"
+    ],
+    "images": {
+      "tent": "Графика/Уже были/tent.png",
+      "coin": "Графика/Уже были/coin.png",
+      "wallet": "Графика/Уже были/wallet.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 09/T17 — Новый план мечты.txt"
+  },
+  {
+    "title": "Радость по плану",
+    "question": "Забота, запас и мечта обеспечены. На приятное выделено 5 монет. Выбери мороженое за 5 или сохрани эти деньги.",
+    "hero": "icecream",
+    "type": "select",
+    "board": {
+      "wallet": 5,
+      "choices": [
+        {
+          "id": "ice",
+          "label": "Мороженое · 5",
+          "asset": "icecream",
+          "cost": 5
+        },
+        {
+          "id": "keep",
+          "label": "Сохранить 5",
+          "asset": "piggy",
+          "cost": 0
+        },
+        {
+          "id": "toy",
+          "label": "Игрушка · 20",
+          "asset": "rocket",
+          "cost": 20
+        }
+      ]
+    },
+    "solution": {
+      "accepted": [
+        "ice",
+        "keep"
+      ],
+      "outcomes": {
+        "ice": {
+          "wallet": 0,
+          "spent": 5
+        },
+        "keep": {
+          "wallet": 5,
+          "spent": 0
+        }
+      }
+    },
+    "explanation": "Оба решения подходят: приятная покупка в пределах плана или дополнительные накопления.",
+    "hint": "Можно потратить не больше выделенного на приятное.",
+    "theme": "Уважать выбор между доступной радостью и накоплением.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T18",
+    "day": 9,
+    "slot": 2,
+    "level": 3,
+    "petStage": "Взрослый Финни",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "icecream",
+      "coin",
+      "piggy",
+      "rocket",
+      "wallet"
+    ],
+    "images": {
+      "icecream": "Графика/Уже были/icecream.png",
+      "coin": "Графика/Уже были/coin.png",
+      "piggy": "Графика/Уже были/piggy.png",
+      "rocket": "Графика/Уже были/rocket.png",
+      "wallet": "Графика/Уже были/wallet.png"
+    },
+    "textFile": "День 09/T18 — Радость по плану.txt"
+  },
+  {
+    "title": "Мечта или сейчас?",
+    "question": "До самоката осталось 20. Свободны 30 монет. Выбери шаг к мечте: отложить 10 или 20.",
+    "hero": "scooter",
+    "type": "select",
+    "board": {
+      "wallet": 30,
+      "saved": 130,
+      "goal": 150,
+      "choices": [
+        {
+          "id": "game",
+          "label": "Купить игру · 30",
+          "asset": "phone",
+          "cost": 30
+        },
+        {
+          "id": "save10",
+          "label": "Отложить 10",
+          "asset": "piggy",
+          "amount": 10
+        },
+        {
+          "id": "save20",
+          "label": "Отложить 20",
+          "asset": "piggy",
+          "amount": 20
+        }
+      ]
+    },
+    "solution": {
+      "accepted": [
+        "save10",
+        "save20"
+      ],
+      "outcomes": {
+        "save10": {
+          "saved": 140,
+          "wallet": 20
+        },
+        "save20": {
+          "saved": 150,
+          "wallet": 10
+        }
+      }
+    },
+    "explanation": "Оба перевода приближают выбранную цель. При переводе 20 монет на самокат уже хватает.",
+    "hint": "В этом задании мы продолжаем копить на самокат.",
+    "theme": "Выбирать темп движения к своей цели.",
+    "sourceId": "dream-or-now",
+    "sourceStatus": "адаптировано из архива",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T19",
+    "day": 10,
+    "slot": 1,
+    "level": 3,
+    "petStage": "Взрослый Финни",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "scooter",
+      "coin",
+      "phone",
+      "piggy",
+      "wallet"
+    ],
+    "images": {
+      "scooter": "Графика/Уже были/scooter.png",
+      "coin": "Графика/Уже были/coin.png",
+      "phone": "Графика/Уже были/phone.png",
+      "piggy": "Графика/Уже были/piggy.png",
+      "wallet": "Графика/Уже были/wallet.png"
+    },
+    "textFile": "День 10/T19 — Мечта или сейчас.txt"
+  },
+  {
+    "title": "Мой план на день",
+    "question": "Распредели 100 монет: 50 на заботу, 10 в запас, 30 на мечту и 10 на приятное.",
+    "hero": "wallet",
+    "type": "allocate",
+    "board": {
+      "wallet": 100,
+      "tokens": [
+        {
+          "id": "a",
+          "value": 50
+        },
+        {
+          "id": "b",
+          "value": 10
+        },
+        {
+          "id": "c",
+          "value": 30
+        },
+        {
+          "id": "d",
+          "value": 10
+        }
+      ],
+      "zones": [
+        "Забота",
+        "Запас",
+        "Мечта",
+        "Приятное"
+      ]
+    },
+    "solution": {
+      "zoneTotals": {
+        "Забота": 50,
+        "Запас": 10,
+        "Мечта": 30,
+        "Приятное": 10
+      },
+      "allTokens": true
+    },
+    "explanation": "План учитывает сегодняшний день, неожиданности, мечту и маленькую радость.",
+    "hint": "Распредели стопки по суммам на карточках.",
+    "theme": "Собирать полный план без сложного ручного счёта.",
+    "sourceId": null,
+    "sourceStatus": "новое",
+    "motion": "Предмет или стопка монет перемещается в выбранную область; итог обновляется на экране без ручного счёта.",
+    "id": "T20",
+    "day": 10,
+    "slot": 2,
+    "level": 3,
+    "petStage": "Взрослый Финни",
+    "kind": "daily-task",
+    "reward": {
+      "coins": 10,
+      "oncePerId": true
+    },
+    "isolatedTrainingWallet": true,
+    "assets": [
+      "wallet",
+      "coin",
+      "piggy"
+    ],
+    "images": {
+      "wallet": "Графика/Уже были/wallet.png",
+      "coin": "Графика/Уже были/coin.png",
+      "piggy": "Графика/Уже были/piggy.png"
+    },
+    "textFile": "День 10/T20 — Мой план на день.txt"
+  }
+]

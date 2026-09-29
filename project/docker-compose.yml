@@ -1,0 +1,8 @@
+# Optional local API stub for development; the game runs offline without it.
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "127.0.0.1:3000:3000"

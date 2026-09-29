@@ -1,0 +1,14 @@
+**/node_modules
+**/dist
+**/build
+**/.gradle
+**/coverage
+**/test-results
+**/playwright-report
+**/.env*
+**/*.jks
+**/*.keystore
+android
+resources
+artifacts
+.tooling

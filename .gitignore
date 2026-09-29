@@ -1,0 +1,32 @@
+# Local dependencies and tool caches
+**/node_modules/
+**/.pnpm-store/
+**/.gradle/
+**/.cxx/
+**/.tooling/
+**/.dev-logs/
+**/.node_modules-stage5-backup/
+
+# Generated applications and test output
+**/dist/
+**/build/
+**/coverage/
+**/test-results/
+**/playwright-report/
+**/artifacts/
+
+# Local configuration and signing material
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.sample
+**/local.properties
+*.jks
+*.keystore
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log

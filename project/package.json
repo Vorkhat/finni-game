@@ -1,0 +1,43 @@
+{
+  "name": "finni",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "pnpm --filter @finni/web dev",
+    "dev:all": "pnpm -r --parallel run dev",
+    "build": "pnpm lint && pnpm exec tsc -p apps/api/tsconfig.json && pnpm --dir apps/web exec vite build",
+    "lint": "pnpm exec tsc --noEmit -p packages/shared/tsconfig.json && pnpm exec tsc --noEmit -p packages/content/tsconfig.json && pnpm exec tsc --noEmit -p apps/api/tsconfig.json && pnpm exec tsc --noEmit -p apps/web/tsconfig.json && pnpm exec tsc --noEmit -p tsconfig.e2e.json",
+    "test": "pnpm exec vitest run packages/shared packages/content apps/web && node --test scripts/export-android-artifacts.test.mjs",
+    "coverage": "pnpm exec vitest run packages/shared packages/content apps/web --coverage",
+    "e2e": "pnpm build && pnpm exec playwright test",
+    "check": "pnpm test && pnpm e2e",
+    "preview": "pnpm --dir apps/web exec vite preview --host 127.0.0.1 --port 4173 --strictPort",
+    "android:add": "pnpm build && cap add android",
+    "android:toolchain": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/bootstrap-android-toolchain.ps1",
+    "android:sync": "pnpm build && cap sync android",
+    "android:assets:source": "node scripts/prepare-android-assets.mjs",
+    "android:assets": "pnpm android:assets:source && capacitor-assets generate --android --assetPath resources/android",
+    "android:open": "cap open android",
+    "android:build": "pnpm android:sync && node scripts/android-gradle.mjs clean assembleDebug && node scripts/export-android-artifacts.mjs debug",
+    "android:release": "pnpm android:sync && node scripts/android-gradle.mjs clean assembleRelease bundleRelease && node scripts/export-android-artifacts.mjs release"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.5.2",
+    "@playwright/test": "^1.51.1",
+    "@types/node": "^24.0.0",
+    "@vitest/coverage-v8": "2.1.9",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.3.0",
+    "sharp": "0.32.6",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.3"
+  }
+}

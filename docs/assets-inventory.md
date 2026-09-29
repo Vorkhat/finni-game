@@ -1,5 +1,21 @@
 # Инвентаризация production assets
 
+Назначение: происхождение production-графики — исходные файлы и их WebP-копии.
+
+## Содержание
+
+- [CHARACTERS](#characters)
+- [EMOTIONS](#emotions)
+- [BACKGROUNDS](#backgrounds)
+- [SHOP ITEMS](#shop-items)
+- [GOALS](#goals)
+- [STATUS](#status)
+- [NAVIGATION](#navigation)
+- [UI](#ui)
+- [BRANDING](#branding)
+- [OTHER](#other)
+- [UNRESOLVED](#unresolved)
+
 Источник: `C:\Users\alzhi\Downloads\финни`. Все 41 файла просмотрены на контактных листах; Home reference и UI atlas также изучены в полном размере.
 
 Исходники не изменены. WebP-копии: качество 92, сохранён alpha, убраны только прозрачные поля; персонажи ≤800 px, товары ≤512 px, цели ≤600 px. Иконки — прямые фрагменты исходного атласа. Цвета и рисунки не перерисовывались.

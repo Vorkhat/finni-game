@@ -21,7 +21,7 @@ export function Onboarding() {
   };
   const finishLabel = () => {
     const profile = game.profile();
-    if (!profile) return "Выбрать Финни";
+    if (!profile) return petText("Выбрать Финни");
     return profile.selectedGoalId
       ? petText("Вернуться к Финни")
       : petText("Выбрать мечту");

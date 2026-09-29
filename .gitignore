@@ -14,6 +14,7 @@
 **/test-results/
 **/playwright-report/
 **/artifacts/
+docs/qa/
 
 # Local configuration and signing material
 **/.env
